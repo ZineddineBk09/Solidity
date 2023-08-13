@@ -3,12 +3,12 @@ pragma solidity ^0.8.0;
 import "./SimpleStorage.sol";
 
 contract StorageFacotry {
-    SimpleStorage[] public simpleStorage;
+    SimpleStorage[] public simpleStorageArray;
 
     // the below function will help to deploy the contract './SimpleStorage.sol'
     function createSimpleStorageContract() public {
         SimpleStorage newSimpleStorage = new SimpleStorage();
-        simpleStorage.push(newSimpleStorage);
+        simpleStorageArray.push(newSimpleStorage);
     }
 
     // the below function will help to interact with the list of deployed contracts
@@ -19,5 +19,8 @@ contract StorageFacotry {
         // RULE: to interact with any contract we need 2 things
         // 1. Address of the contract: we can get it from the list of deployed contracts "simpleStorage"
         // 2. ABI of the contract: stands for Application Binary Interface which tells how to interact with the contract (we automatically get it when we import the contract)
+        SimpleStorage simpleStorageContract = SimpleStorage(
+            simpleStorageArray[_simpleStorageIndex]
+        );
     }
 }
