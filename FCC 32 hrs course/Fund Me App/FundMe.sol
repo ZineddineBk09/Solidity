@@ -71,6 +71,7 @@ contract FundMe {
             // transfer() will transfer the funds from this contract to the funder
             // transfer() will revert if it fails
             // transfer() will return a boolean value
+            // payable is to check if the address is payable or not
             payable(funder).transfer(addressToAmountFunded[funder]);
 
             // we have 3 ways to transfer funds:
