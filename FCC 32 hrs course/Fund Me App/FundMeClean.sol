@@ -4,7 +4,6 @@ pragma solidity ^0.8.0;
 import "./lib/PriceConverter.sol";
 
 contract FundMe {
-    // using PriceConverter for uint256 ==> which means we can call getConversionRate() on any uint256
     using PriceConverter for uint256;
 
     uint256 public minimumUSD = 50 * 1e18;
