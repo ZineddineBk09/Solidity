@@ -12,7 +12,12 @@ contract StorageFacotry {
     }
 
     // the below function will help to interact with the list of deployed contracts
-    function sfStore(uint256 _simpleStorageIndex, uint256 _simpleStorageNumber) public {
-
+    function sfStore(
+        uint256 _simpleStorageIndex,
+        uint256 _simpleStorageNumber
+    ) public {
+        // RULE: to interact with any contract we need 2 things
+        // 1. Address of the contract: we can get it from the list of deployed contracts
+        // 2. ABI of the contract: stands for Application Binary Interface which tells how to interact with the contract
     }
 }
