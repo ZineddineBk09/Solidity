@@ -1,5 +1,6 @@
-
 # Ethereum
+
+## General Info
 
 - **Nonce**: transaction count for the account
 - **Gas Price**: ptice per unit of gas (wei)
