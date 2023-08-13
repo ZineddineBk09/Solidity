@@ -27,9 +27,6 @@ contract StorageFacotry {
     }
 
     function sfGet(uint256 _simpleStorageIndex) public view returns (uint256) {
-        SimpleStorage simpleStorageContract = simpleStorageArray[
-            _simpleStorageIndex
-        ];
-        return simpleStorageContract.getNumber();
+        return simpleStorageArray[_simpleStorageIndex].getNumber();
     }
 }
