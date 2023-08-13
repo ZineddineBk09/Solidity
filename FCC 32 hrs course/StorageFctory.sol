@@ -25,4 +25,11 @@ contract StorageFacotry {
         // we are calling the function store from the contract SimpleStorage to save _simpleStorageNumber value into the contract number variable
         simpleStorageContract.store(_simpleStorageNumber);
     }
+
+    function sfGet(uint256 _simpleStorageIndex) public view returns (uint256) {
+        SimpleStorage simpleStorageContract = simpleStorageArray[
+            _simpleStorageIndex
+        ];
+        return simpleStorageContract.getNumber();
+    }
 }
