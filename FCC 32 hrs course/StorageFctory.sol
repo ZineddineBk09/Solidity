@@ -22,5 +22,7 @@ contract StorageFacotry {
         SimpleStorage simpleStorageContract = SimpleStorage(
             simpleStorageArray[_simpleStorageIndex]
         );
+        // we are calling the function store from the contract SimpleStorage to save _simpleStorageNumber value into the contract number variable
+        simpleStorageContract.store(_simpleStorageNumber);
     }
 }
