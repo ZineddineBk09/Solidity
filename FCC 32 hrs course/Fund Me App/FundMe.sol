@@ -9,6 +9,7 @@ contract FundMe {
         // 2. how to send ETH to this contract
 
         // msg is a global variable that is available to us in solidity to get information about the transaction
+        // msg.value use wei as unit ==> 1e18 wei = 1 ETH
         require(msg.value > 1e18);
     }
 
