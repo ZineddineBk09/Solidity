@@ -72,6 +72,11 @@ contract FundMe {
             // transfer() will revert if it fails
             // transfer() will return a boolean value
             payable(funder).transfer(addressToAmountFunded[funder]);
+
+            // we have 3 ways to transfer funds:
+            // 1. transfer() ==> will revert if it fails
+            // 2. send() ==> will return a boolean value
+            // 3. call() ==> will return a boolean value
         }
 
         // reset the funders array
