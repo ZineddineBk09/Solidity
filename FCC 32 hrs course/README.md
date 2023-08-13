@@ -1,6 +1,6 @@
 # Web3 and Solidity - FreeCodeCamp Course
 
-## General Info
+## General knowledge
 
 - **Nonce**: transaction count for the account
 - **Gas Price**: ptice per unit of gas (wei)
