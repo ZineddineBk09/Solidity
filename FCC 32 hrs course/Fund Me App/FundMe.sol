@@ -72,8 +72,8 @@ contract FundMe {
 
             // we have 3 ways to transfer funds:
             // 1. transfer() ==> take only 2300 gas, if it's not enough then it will revert the tx
-            // 2. send() ==> will return a boolean value, but if it fails it will not revert the tx ==> no money will be sent back to the contract. that's why we use it with a require() to check if it's true or not
-            // 3. call() ==> will return a boolean value, but if it fails it will not revert the tx ==> no money will be sent back to the contract. that's why we use it with a require() to check if it's true or not
+            // 2. send() ==> take only 2300 gas, will return a boolean value, but if it fails it will not revert the tx ==> no money will be sent back to the contract. that's why we use it with a require() to check if it's true or not
+            // 3. call() ==> does not have gas limit, will return a boolean value, but if it fails it will not revert the tx ==> no money will be sent back to the contract. that's why we use it with a require() to check if it's true or not
         }
 
         // reset the funders array
