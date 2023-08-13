@@ -10,7 +10,9 @@ contract FundMe {
 
         // msg is a global variable that is available to us in solidity to get information about the transaction
         // msg.value use wei as unit ==> 1e18 wei = 1 ETH
-        require(msg.value > 1e18);
+        // if the value is less than 1 ETH then the transaction will revert and the ETH will be sent back to the sender and everything done in the transaction (fund function) will be reverted
+        // BUT the gas will be spent anyway
+        require(msg.value > 1e18, "You need to spend more ETH");
     }
 
     function withdraw() internal {}
