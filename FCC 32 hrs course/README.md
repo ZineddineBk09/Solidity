@@ -1,4 +1,4 @@
-# Ethereum
+# Web3 and Solidity - FreeCodeCamp Course
 
 ## General Info
 
