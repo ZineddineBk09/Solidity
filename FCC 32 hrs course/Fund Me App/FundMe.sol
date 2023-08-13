@@ -59,11 +59,7 @@ contract FundMe {
 
     // withdraw all the funds
     function withdraw() public {
-        for (
-            uint256 funderIndex;
-            funderIndex < funders.length;
-            funderIndex++
-        ) {
+        for (uint256 funderIndex; funderIndex < funders.length; funderIndex++) {
             address funder = funders[funderIndex];
             addressToAmountFunded[funder] = 0;
             // transfer the funds to the funder
@@ -75,9 +71,9 @@ contract FundMe {
             payable(funder).transfer(addressToAmountFunded[funder]);
 
             // we have 3 ways to transfer funds:
-            // 1. transfer() ==> will revert if it fails
-            // 2. send() ==> will return a boolean value
-            // 3. call() ==> will return a boolean value
+            // 1. transfer() ==> take only 2300 gas, if it's not enough then it will revert the tx
+            // 2. send() ==> will return a boolean value, but if it fails it will not revert the tx ==> no money will be sent back to the contract. that's why we use it with a require() to check if it's true or not
+            // 3. call() ==> will return a boolean value, but if it fails it will not revert the tx ==> no money will be sent back to the contract. that's why we use it with a require() to check if it's true or not
         }
 
         // reset the funders array
