@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
-// libraries can;t have state variables and also can't send ether and all library functions will be internal
+// libraries can't have state variables and also can't send ether and all library functions will be internal
 library PriceConverter {
     // get the ETH/USD price feed
     function getPrice() public view returns (uint256) {
