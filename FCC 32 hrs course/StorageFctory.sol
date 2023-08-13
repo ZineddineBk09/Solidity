@@ -10,4 +10,9 @@ contract StorageFacotry {
         SimpleStorage newSimpleStorage = new SimpleStorage();
         simpleStorage.push(newSimpleStorage);
     }
+
+    // the below function will help to interact with the list of deployed contracts
+    function sfStore(uint256 _simpleStorageIndex, uint256 _simpleStorageNumber) public {
+
+    }
 }
