@@ -6,7 +6,10 @@ import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 // NOTE: we're using Sepolia as a test network
 // NOTE: contract can hold funds same as a wallet the only difference is that a contract can hold funds and do something with it (e.g. send it to another address) , because they an address
 contract FundMe {
-    uint256 public minimumUSD = 50;
+    uint256 public minimumUSD = 50 * 1e18;
+
+    address[] public funders;
+    mapping(address => uint256) public addressToAmountFunded;
 
     function fund() public payable {
         // things to take in consideration:
@@ -21,6 +24,9 @@ contract FundMe {
             getConversionRate(msg.value) >= minimumUSD,
             "You need to spend more ETH"
         );
+
+        funders.push(msg.sender);
+        addressToAmountFunded[msg.sender] += msg.value;
     }
 
     // get the ETH/USD price feed
