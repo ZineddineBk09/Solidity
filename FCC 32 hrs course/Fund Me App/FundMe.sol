@@ -57,5 +57,24 @@ contract FundMe {
         return ethAmountInUsd;
     }
 
-    function withdraw() internal {}
+    // withdraw all the funds
+    function withdraw() public {
+        for (
+            uint256 funderIndex;
+            funderIndex < funders.length;
+            funderIndex++
+        ) {
+            address funder = funders[funderIndex];
+            addressToAmountFunded[funder] = 0;
+            // transfer the funds to the funder
+            // transfer() is a function that is available on the address type
+            // transfer() will transfer the funds from this contract to the funder
+            // transfer() will revert if it fails
+            // transfer() will return a boolean value
+            payable(funder).transfer(addressToAmountFunded[funder]);
+        }
+
+        // reset the funders array
+        funders = new address[](0);
+    }
 }
