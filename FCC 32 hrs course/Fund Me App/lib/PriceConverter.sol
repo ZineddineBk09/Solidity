@@ -15,6 +15,7 @@ library PriceConverter {
         return uint256(answer * 1e10);
     }
 
+    // we can now call this function from any contract that imports this library: 
     function getConversionRate(
         uint256 ethAmount
     ) internal view returns (uint256) {
