@@ -33,7 +33,7 @@
 - **address payable**: address that can send ether
 - **modifier**: like a function that is run before the function it is applied to
 
-### Optimization (Gas Ifficiency)
+### Optimization (Gas Efficiency)
 
 - **immutable**: variables that cannot be changed after the contract is deployed
 - **constant**: variables that cannot be changed after the contract is deployed and can be accessed from outside the contract
