@@ -45,7 +45,7 @@ contract FundMe {
         // only the owner can withdraw the funds
         require(
             msg.sender == owner,
-            "You are not allowed to withdraw the funds!"
+            "You're not allowed to withdraw the funds!"
         );
 
         for (uint256 funderIndex; funderIndex < funders.length; funderIndex++) {
