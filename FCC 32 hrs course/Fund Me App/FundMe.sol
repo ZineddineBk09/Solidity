@@ -72,4 +72,6 @@ contract FundMe {
 
     // what happens if someone sends ETH to this contract without calling the fund() function? or any other function?
     // in solidity there's a lot a special functions, but we need 2 here: receive() and fallback()
+    // receive() is a special function that is called when someone sends ETH to this contract without calling any function that is available on this contract
+    // fallback() is a special function that is called when someone sends ETH to this contract and the function that is called does not exist
 }
