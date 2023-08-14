@@ -44,4 +44,12 @@ contract FundMe {
 
         funders = new address[](0);
     }
+
+    receive() external payable {
+        fund();
+    }
+
+    fallback() external payable {
+        fund();
+    }
 }
