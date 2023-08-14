@@ -1,5 +1,10 @@
 # Web3 and Solidity - FreeCodeCamp Course
 
+[comment]: <> (Add a solidity image here :https://www.criptonoticias.com/wp-content/uploads/2021/02/solidity-lenguaje-programacion-actualizacion.jpg)
+
+![Solidity](https://www.criptonoticias.com/wp-content/uploads/2021/02/solidity-lenguaje-programacion-actualizacion.jpg)
+
+
 ## General knowledge
 
 - **Nonce**: transaction count for the account
