@@ -32,6 +32,8 @@
 - **address(this)**: address of the contract
 - **address payable**: address that can send ether
 - **modifier**: like a function that is run before the function it is applied to
+- **receive function**: a special function in solidity that is run when the contract receives ether without a function call
+- **fallback function**: a special function in solidity that is run when the contract receives ether and the function call does not match any other function
 
 ### Optimization (Gas Efficiency)
 
