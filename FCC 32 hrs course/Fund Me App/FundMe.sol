@@ -32,7 +32,7 @@ contract FundMe {
         // if the value is less than 1 ETH then the transaction will revert and the ETH will be sent back to the sender and everything done in the transaction (fund function) will be reverted
         // BUT the gas will be spent anyway
         require(
-            (msg.value.getConversionRate()) >= MINIMUM_USD,
+            msg.value.getConversionRate() >= MINIMUM_USD,
             "You need to spend more ETH"
         );
 

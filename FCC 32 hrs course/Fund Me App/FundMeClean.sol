@@ -20,7 +20,7 @@ contract FundMe {
 
     function fund() public payable {
         require(
-            (msg.value.getConversionRate()) >= MINIMUM_USD,
+            msg.value.getConversionRate() >= MINIMUM_USD,
             "You need to spend more ETH"
         );
 
