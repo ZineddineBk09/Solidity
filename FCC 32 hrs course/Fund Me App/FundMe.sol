@@ -69,4 +69,7 @@ contract FundMe {
         // reset the funders array
         funders = new address[](0);
     }
+
+    // what happens if someone sends ETH to this contract without calling the fund() function? or any other function?
+    // in solidity there's a lot a special functions, but we need 2 here: receive() and fallback()
 }
