@@ -10,11 +10,11 @@ contract FundMe {
     // using PriceConverter for uint256 ==> which means we can call getConversionRate() on any uint256
     using PriceConverter for uint256;
 
-    uint256 public minimumUSD = 50 * 1e18;
+    uint256 public constant MINIMUM_USD = 50 * 1e18;
 
     address[] public funders;
     mapping(address => uint256) public addressToAmountFunded;
-    address public owner;
+    address public immutable owner;
 
     // NOTE: this is a special function that is called when the contract is deployed
     constructor() {
@@ -32,7 +32,7 @@ contract FundMe {
         // if the value is less than 1 ETH then the transaction will revert and the ETH will be sent back to the sender and everything done in the transaction (fund function) will be reverted
         // BUT the gas will be spent anyway
         require(
-            (msg.value.getConversionRate()) >= minimumUSD,
+            (msg.value.getConversionRate()) >= MINIMUM_USD,
             "You need to spend more ETH"
         );
 
