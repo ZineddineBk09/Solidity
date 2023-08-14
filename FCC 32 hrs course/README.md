@@ -37,5 +37,6 @@
 
 - **immutable**: variables that cannot be changed after the contract is deployed
 - **constant**: variables that cannot be changed after the contract is deployed and can be accessed from outside the contract
+- **if and custom errors instead of require**: require uses more gas than if statements and custom errors
 - **view**: functions that do not change the state of the contract
 - **pure**: functions that do not read from or modify the state of the contract
