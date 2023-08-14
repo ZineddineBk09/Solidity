@@ -6,11 +6,11 @@ import "./lib/PriceConverter.sol";
 contract FundMe {
     using PriceConverter for uint256;
 
-    uint256 public minimumUSD = 50 * 1e18;
+    uint256 public constant MINIMUM_USD = 50 * 1e18;
 
     address[] public funders;
     mapping(address => uint256) public addressToAmountFunded;
-    address public owner;
+    address public immutable owner;
 
     constructor() {
         owner = msg.sender;
@@ -18,7 +18,7 @@ contract FundMe {
 
     function fund() public payable {
         require(
-            (msg.value.getConversionRate()) >= minimumUSD,
+            (msg.value.getConversionRate()) >=  MINIMUM_USD,
             "You need to spend more ETH"
         );
 
@@ -26,6 +26,11 @@ contract FundMe {
         addressToAmountFunded[msg.sender] += msg.value;
     }
 
+    modifier isOwner {
+        require(msg.sender == owner, "You're not the owner!");
+        _;
+    }
+    
     function withdraw() public isOwner {
         for (uint256 funderIndex; funderIndex < funders.length; funderIndex++) {
             address funder = funders[funderIndex];
@@ -36,8 +41,4 @@ contract FundMe {
         funders = new address[](0);
     }
 
-    modifier isOwner {
-        require(msg.sender == owner, "You're not the owner!");
-        _;
-    }
 }
