@@ -41,13 +41,7 @@ contract FundMe {
     }
 
     // withdraw all the funds
-    function withdraw() public {
-        // only the owner can withdraw the funds
-        require(
-            msg.sender == owner,
-            "You're not allowed to withdraw the funds!"
-        );
-
+    function withdraw() public isOwner{
         for (uint256 funderIndex; funderIndex < funders.length; funderIndex++) {
             address funder = funders[funderIndex];
             addressToAmountFunded[funder] = 0;
@@ -67,5 +61,11 @@ contract FundMe {
 
         // reset the funders array
         funders = new address[](0);
+    }
+
+    // modifier is a function that can be run before another function to check if the condition is true or not
+    modifier isOwner() {
+        require(msg.sender == owner, "You're not the owner!");
+        _;
     }
 }
