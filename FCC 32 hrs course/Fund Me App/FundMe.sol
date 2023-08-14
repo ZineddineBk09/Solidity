@@ -14,9 +14,13 @@ contract FundMe {
 
     address[] public funders;
     mapping(address => uint256) public addressToAmountFunded;
+    address public owner;
 
     // NOTE: this is a special function that is called when the contract is deployed
-    constructor() {}
+    constructor() {
+        // msg.sender of the constructor is the address that deployed the contract ==> contract owner
+        owner = msg.sender;
+    }
 
     function fund() public payable {
         // things to take in consideration:
@@ -38,6 +42,12 @@ contract FundMe {
 
     // withdraw all the funds
     function withdraw() public {
+        // only the owner can withdraw the funds
+        require(
+            msg.sender == owner,
+            "You are not allowed to withdraw the funds!"
+        );
+
         for (uint256 funderIndex; funderIndex < funders.length; funderIndex++) {
             address funder = funders[funderIndex];
             addressToAmountFunded[funder] = 0;
