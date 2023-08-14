@@ -40,11 +40,18 @@ contract FundMe {
         addressToAmountFunded[msg.sender] += msg.value;
     }
 
+    // modifier is a function that can be run before another function to check if the condition is true or not
+    modifier isOwner() {
+        require(msg.sender == owner, "You're not the owner!");
+        _;
+    }
+
     // withdraw all the funds
-    function withdraw() public isOwner{
+    function withdraw() public isOwner {
         for (uint256 funderIndex; funderIndex < funders.length; funderIndex++) {
             address funder = funders[funderIndex];
             addressToAmountFunded[funder] = 0;
+
             // transfer the funds to the funder
             // transfer() is a function that is available on the address type
             // transfer() will transfer the funds from this contract to the funder
@@ -61,11 +68,5 @@ contract FundMe {
 
         // reset the funders array
         funders = new address[](0);
-    }
-
-    // modifier is a function that can be run before another function to check if the condition is true or not
-    modifier isOwner() {
-        require(msg.sender == owner, "You're not the owner!");
-        _;
     }
 }
