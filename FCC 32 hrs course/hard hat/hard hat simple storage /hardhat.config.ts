@@ -6,6 +6,7 @@ import '@nomicfoundation/hardhat-verify'
 const RPC_ALCHEMY_SEPOLIA_SERVER_URL =
   process.env.RPC_ALCHEMY_SEPOLIA_SERVER_URL!
 const METAMASK_ACCOUNT_PRIVATE_KEY = process.env.METAMASK_ACCOUNT_PRIVATE_KEY!
+const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY!
 
 const config: HardhatUserConfig = {
   defaultNetwork: 'hardhat',
@@ -17,7 +18,7 @@ const config: HardhatUserConfig = {
     },
   },
   etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY!,
+    apiKey: ETHERSCAN_API_KEY,
   },
   solidity: '0.8.19',
 }
