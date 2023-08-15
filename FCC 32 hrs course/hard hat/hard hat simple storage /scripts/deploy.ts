@@ -1,9 +1,13 @@
 import { ethers, run, network } from 'hardhat'
 
 async function main() {
-  const SimpleStorageFactory = await ethers.getContractFactory('SimpleStorage')
-  console.log('Deploying SimpleStorage...🚀')
-  const simpleStorage = await SimpleStorageFactory.deploy()
+  const simpleStorage = await ethers
+    .getContractFactory('SimpleStorage')
+    .then((factory) => {
+      console.log('Deploying SimpleStorage...🚀')
+      return factory.deploy()
+    })
+
   const address = await simpleStorage.getAddress()
   console.log('SimpleStorage deployed to:', address)
 
