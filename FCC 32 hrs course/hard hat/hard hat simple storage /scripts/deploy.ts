@@ -10,9 +10,17 @@ async function main() {
   // check if we're on sepolia testnet and we have an etherscan api key
   if (network.config.chainId === 11155111 && process.env.ETHERSCAN_API_KEY) {
     // wait 6 blocks to make sure the contract is mined
-    await simpleStorage
+    await simpleStorage.deploymentTransaction()!.wait(6)
     await verify(address, [])
   }
+
+  const number = await simpleStorage.getNumber()
+  console.log('Number is:', number.toString())
+
+  const transactionResponse = await simpleStorage.store(42)
+  await transactionResponse.wait()
+  const newNumber = await simpleStorage.getNumber()
+  console.log('New number is:', newNumber)
 }
 
 async function verify(contractAddress: string, args: any) {
