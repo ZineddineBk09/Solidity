@@ -5,6 +5,7 @@ import '@nomicfoundation/hardhat-verify'
 import './tasks/block-number'
 import 'hardhat-gas-reporter'
 import 'solidity-coverage'
+import '@typechain/hardhat'
 
 const RPC_ALCHEMY_SEPOLIA_SERVER_URL =
   process.env.RPC_ALCHEMY_SEPOLIA_SERVER_URL || ''
