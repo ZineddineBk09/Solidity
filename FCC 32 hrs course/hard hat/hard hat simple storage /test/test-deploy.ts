@@ -1,4 +1,4 @@
-import { ethers, run, network } from 'hardhat'
+import { ethers } from 'hardhat'
 import { expect } from 'chai'
 
 describe('SimpleStorage', () => {
@@ -23,3 +23,5 @@ describe('SimpleStorage', () => {
     expect(currentNumber).to.equal('1')
   })
 })
+
+// NOTE: if you want to only run one test, you can use the .only method. e.g.: it.only('...')

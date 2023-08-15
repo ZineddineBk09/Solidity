@@ -3,6 +3,7 @@ import '@nomicfoundation/hardhat-toolbox'
 import 'dotenv/config'
 import '@nomicfoundation/hardhat-verify'
 import './tasks/block-number'
+import 'hardhat-gas-reporter'
 
 const RPC_ALCHEMY_SEPOLIA_SERVER_URL =
   process.env.RPC_ALCHEMY_SEPOLIA_SERVER_URL!
@@ -25,6 +26,10 @@ const config: HardhatUserConfig = {
   },
   etherscan: {
     apiKey: ETHERSCAN_API_KEY,
+  },
+  gasReporter: {
+    enabled: true,
+    outputFile: 'gas-report.txt',
   },
   solidity: '0.8.19',
 }
