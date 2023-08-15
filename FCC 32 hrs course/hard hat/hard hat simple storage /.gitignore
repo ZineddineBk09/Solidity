@@ -11,3 +11,6 @@ artifacts
 
 # Gas reporter
 gas-report.txt
+
+# HardHat Coverage
+coverage.json
