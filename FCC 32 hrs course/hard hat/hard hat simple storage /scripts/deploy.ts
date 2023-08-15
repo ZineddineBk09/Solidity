@@ -9,7 +9,7 @@ async function main() {
 
   // check if we're on sepolia testnet and we have an etherscan api key
   if (network.config.chainId === 11155111 && process.env.ETHERSCAN_API_KEY) {
-    // wait 6 blocks to make sure the contract is mined
+    // wait 6 blocks to make sure the contract is mined on sepolia testnet
     await simpleStorage.deploymentTransaction()!.wait(6)
     await verify(address, [])
   }
