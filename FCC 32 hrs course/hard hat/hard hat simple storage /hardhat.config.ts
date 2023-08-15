@@ -1,6 +1,7 @@
 import { HardhatUserConfig } from 'hardhat/config'
 import '@nomicfoundation/hardhat-toolbox'
 import 'dotenv/config'
+import '@nomicfoundation/hardhat-verify'
 
 const RPC_ALCHEMY_SEPOLIA_SERVER_URL =
   process.env.RPC_ALCHEMY_SEPOLIA_SERVER_URL!
