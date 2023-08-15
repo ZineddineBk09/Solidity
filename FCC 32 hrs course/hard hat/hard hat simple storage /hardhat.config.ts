@@ -17,6 +17,11 @@ const config: HardhatUserConfig = {
       accounts: [METAMASK_ACCOUNT_PRIVATE_KEY],
       chainId: 11155111,
     },
+    localhost: {
+      url: 'http://127.0.0.1:8545/',
+      chainId: 31337,
+      // accounts: hardhat has already 20 accounts with 10k eth,
+    },
   },
   etherscan: {
     apiKey: ETHERSCAN_API_KEY,
