@@ -3,6 +3,8 @@ Hardhat Simple Storage Project
 
 Welcome to the Hardhat Simple Storage project! This repository contains a basic setup for building and testing smart contracts using the Hardhat development environment. The main smart contract in this project is a simple storage contract that allows you to store and retrieve an integer value.
 
+![HardHat](https://www.solodev.com/file/e367330d-e5a7-11ec-b9ad-0eaef3759f5f/Hardhat-Featured-Image-2d7d004b.png)
+
 Quick Start
 -----------
 
