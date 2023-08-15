@@ -1,14 +1,13 @@
-const ethers = require('ethers');
-const fs = require('fs-extra');
-const dotenv = require('dotenv');
-dotenv.config();
+import { ethers } from 'ethers'
+import * as fs from 'fs-extra'
+import 'dotenv/config'
 
 async function main() {
   const provider = new ethers.JsonRpcProvider(
     process.env.RPC_ALCHEMY_SEPOLIA_SERVER_URL
   )
   let wallet = new ethers.Wallet(
-    process.env.METAMASK_ACCOUNT_PRIVATE_KEY,
+    process.env.METAMASK_ACCOUNT_PRIVATE_KEY!,
     provider
   )
 
@@ -19,7 +18,7 @@ async function main() {
   console.log('Deploying contract...')
 
   // deploy contract
-  const contract = await contractFactory.deploy()
+  const contract: any = await contractFactory.deploy()
 
   // wait for contract to be mined and added to the blockchain
   await contract.deploymentTransaction().wait(1)
