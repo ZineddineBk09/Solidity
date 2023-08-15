@@ -6,9 +6,11 @@ import './tasks/block-number'
 import 'hardhat-gas-reporter'
 
 const RPC_ALCHEMY_SEPOLIA_SERVER_URL =
-  process.env.RPC_ALCHEMY_SEPOLIA_SERVER_URL!
-const METAMASK_ACCOUNT_PRIVATE_KEY = process.env.METAMASK_ACCOUNT_PRIVATE_KEY!
-const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY!
+  process.env.RPC_ALCHEMY_SEPOLIA_SERVER_URL || ''
+const METAMASK_ACCOUNT_PRIVATE_KEY =
+  process.env.METAMASK_ACCOUNT_PRIVATE_KEY || ''
+const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || ''
+const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY || ''
 
 const config: HardhatUserConfig = {
   defaultNetwork: 'hardhat',
@@ -28,8 +30,12 @@ const config: HardhatUserConfig = {
     apiKey: ETHERSCAN_API_KEY,
   },
   gasReporter: {
-    enabled: true,
+    enabled: false,
     outputFile: 'gas-report.txt',
+    currency: 'USD',
+    noColors: true,
+    coinmarketcap: COINMARKETCAP_API_KEY,
+    token: 'MATIC', // to select the network the token is on (default: ETH)
   },
   solidity: '0.8.19',
 }
