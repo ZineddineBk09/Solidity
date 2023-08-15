@@ -1,34 +1,33 @@
-// SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.9;
+// SPDX-License-Identifier: MIT
 
-// Uncomment this line to use console.log
-// import "hardhat/console.sol";
+pragma solidity ^0.8.18;
 
-contract Lock {
-    uint public unlockTime;
-    address payable public owner;
+contract SimpleStorage {
+    uint256 number;
 
-    event Withdrawal(uint amount, uint when);
+    People public zino = People({id: 1, name: "zineddine"});
 
-    constructor(uint _unlockTime) payable {
-        require(
-            block.timestamp < _unlockTime,
-            "Unlock time should be in the future"
-        );
+    People[] public people;
 
-        unlockTime = _unlockTime;
-        owner = payable(msg.sender);
+    struct People {
+        uint256 id;
+        string name;
     }
 
-    function withdraw() public {
-        // Uncomment this line, and the import of "hardhat/console.sol", to print a log in your terminal
-        // console.log("Unlock time is %o and block timestamp is %o", unlockTime, block.timestamp);
+    mapping(string => uint256) public nameToIdMapping;
 
-        require(block.timestamp >= unlockTime, "You can't withdraw yet");
-        require(msg.sender == owner, "You aren't the owner");
+    function store(uint256 _number) public virtual {
+        number = _number;
+    }
 
-        emit Withdrawal(address(this).balance, block.timestamp);
+    function getNumber() public view returns (uint256) {
+        return number;
+    }
 
-        owner.transfer(address(this).balance);
+    function addPerson(string memory _name, uint256 _id) public {
+        People memory newPerson = People(_id, _name);
+        people.push(newPerson);
+
+        nameToIdMapping[_name] = _id;
     }
 }
