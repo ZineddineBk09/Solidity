@@ -7,7 +7,9 @@ describe('SimpleStorage', () => {
   let simpleStorage: SimpleStorage
 
   beforeEach(async () => {
-    SimpleStorageFactory = await ethers.getContractFactory('SimpleStorage')
+    SimpleStorageFactory = (await ethers.getContractFactory(
+      'SimpleStorage'
+    )) as SimpleStorage__factory
     simpleStorage = await SimpleStorageFactory.deploy()
   })
 
