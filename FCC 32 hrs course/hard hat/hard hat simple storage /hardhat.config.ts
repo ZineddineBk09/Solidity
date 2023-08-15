@@ -12,6 +12,7 @@ const config: HardhatUserConfig = {
     sepolia: {
       url: RPC_ALCHEMY_SEPOLIA_SERVER_URL,
       accounts: [METAMASK_ACCOUNT_PRIVATE_KEY],
+      chainId: 11155111,
     },
   },
   solidity: '0.8.19',
