@@ -6,7 +6,6 @@ import './tasks/block-number'
 import 'hardhat-gas-reporter'
 import 'solidity-coverage'
 
-
 const RPC_ALCHEMY_SEPOLIA_SERVER_URL =
   process.env.RPC_ALCHEMY_SEPOLIA_SERVER_URL || ''
 const METAMASK_ACCOUNT_PRIVATE_KEY =
