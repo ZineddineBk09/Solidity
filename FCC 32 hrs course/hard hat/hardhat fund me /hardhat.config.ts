@@ -22,7 +22,7 @@ const config: HardhatUserConfig = {
     },
     sepolia: {
       url: SEPOLIA_RPC_URL,
-      accounts: [PRIVATE_KEY],
+      accounts: [],
       chainId: 11155111,
     },
   },
@@ -36,6 +36,14 @@ const config: HardhatUserConfig = {
     outputFile: 'gas-report.txt',
     noColors: true,
     // coinmarketcap: COINMARKETCAP_API_KEY,
+  },
+  namedAccounts: {
+    deployer: {
+      default: 0,
+    },
+    user: {
+      default: 1,
+    },
   },
   mocha: {
     timeout: 500000,
