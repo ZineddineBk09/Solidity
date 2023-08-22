@@ -5,6 +5,7 @@ import '@nomicfoundation/hardhat-verify'
 import 'hardhat-gas-reporter'
 import 'solidity-coverage'
 import '@typechain/hardhat'
+import 'hardhat-deploy'
 
 const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY || ''
 const SEPOLIA_RPC_URL = process.env.RPC_ALCHEMY_SEPOLIA_SERVER_URL || ''
