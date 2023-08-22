@@ -6,6 +6,7 @@ import 'hardhat-gas-reporter'
 import 'solidity-coverage'
 import '@typechain/hardhat'
 import 'hardhat-deploy'
+// the way "hardhat-deploy" works is when you run hardhat deploy, it will run all the files in the "deploy" folder, so it's good practice to number them in the order you want them to run
 
 const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY || ''
 const SEPOLIA_RPC_URL = process.env.RPC_ALCHEMY_SEPOLIA_SERVER_URL || ''
