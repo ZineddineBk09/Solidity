@@ -1,11 +1,10 @@
 import { HardhatUserConfig } from 'hardhat/config'
 import '@nomicfoundation/hardhat-toolbox'
-require('@nomiclabs/hardhat-waffle')
-require('hardhat-gas-reporter')
-require('@nomiclabs/hardhat-etherscan')
-require('dotenv').config()
-require('solidity-coverage')
-require('hardhat-deploy')
+import 'dotenv/config'
+import '@nomicfoundation/hardhat-verify'
+import 'hardhat-gas-reporter'
+import 'solidity-coverage'
+import '@typechain/hardhat'
 
 const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY || ''
 const SEPOLIA_RPC_URL = process.env.RPC_ALCHEMY_SEPOLIA_SERVER_URL || ''
@@ -25,16 +24,6 @@ const config: HardhatUserConfig = {
       chainId: 11155111,
     },
   },
-  solidity: {
-    compilers: [
-      {
-        version: '0.8.7',
-      },
-      {
-        version: '0.6.6',
-      },
-    ],
-  },
   etherscan: {
     apiKey: ETHERSCAN_API_KEY,
     // customChains: [], // uncomment this line if you are getting a TypeError: customChains is not iterable
@@ -49,6 +38,7 @@ const config: HardhatUserConfig = {
   mocha: {
     timeout: 500000,
   },
+  solidity: '0.8.19',
 }
 
 export default config
