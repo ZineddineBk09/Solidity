@@ -39,9 +39,8 @@
         >
       </nav>
       <button
-        class="bg-gradient-to-r from-cyan-300 to-purple-600 hover:bg-cyan-400 px-4 py-2 rounded-md text-white text-sm font-medium transition-all duration-300 hover:shadow-md hover:scale-[1.01]"
+        class="bg-gradient-to-r from-cyan-300 to-purple-600 hover:bg-cyan-400 px-4 py-2 rounded-md text-white text-sm font-medium transition-all duration-300 hover:shadow-md hover:scale-[1.01] cursor-pointer"
         id="connect-button"
-        onclick="connect()"
       >
         Connect Wallet
       </button>
@@ -52,7 +51,7 @@
       <div class="w-1/2 h-1/2 flex flex-col items-center justify-center">
         <button
           class="bg-gradient-to-r from-cyan-300 to-purple-600 hover:bg-cyan-400 px-6 py-2 rounded-md text-white text-xl font-semibold transition-all duration-300 hover:shadow-md hover:scale-[1.01]"
-          onclick="fund(0.01)"
+          id="fund-button"
         >
           Fund
         </button>
@@ -60,37 +59,6 @@
     </main>
 
     <!-- Javascript -->
-    <script type="module">
-      import { ethers } from 'https://cdn.ethers.io/lib/ethers-5.2.esm.min.js'
-
-      async function connect() {
-        if (typeof window.ethereum !== 'undefined') {
-          // after the page loads, ask the user to connect their metamask wallet if they approve we can then send requests to their wallet
-          await window.ethereum.request({ method: 'eth_requestAccounts' })
-          console.log('connected to metamask')
-
-          connectBtn.innerHTML =
-            'Connected' +
-            '<br>' +
-            window.ethereum.selectedAddress.slice(0, 6) +
-            '...' +
-            window.ethereum.selectedAddress.slice(-4)
-        } else {
-          // if the user doesn't have metamask installed, show them a message to install it
-          alert('Please install MetaMask to use this dApp!')
-        }
-      }
-
-      async function fund(ethAmount) {
-        if (typeof window.ethereum !== 'undefined') {
-          console.log('funding project with ' + ethAmount + ' ETH')
-
-          // To send a transaction we need:
-          // 1. connection to the blockchain
-          // 2. a wallet with ETH in it
-          // 3. a smart contract address that we want to interact with ==> ABI + address
-        }
-      }
-    </script>
+    <script src="./script.js" type="module"></script>
   </body>
 </html>
