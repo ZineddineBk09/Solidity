@@ -40,6 +40,7 @@
       </nav>
       <button
         class="bg-gradient-to-r from-cyan-300 to-purple-600 hover:bg-cyan-400 px-4 py-2 rounded-md text-white font-semibold transition-all duration-300 hover:shadow-md hover:scale-[1.01]"
+        id="connect-button"
       >
         Connect Wallet
       </button>
@@ -47,9 +48,18 @@
 
     <!-- Javascript -->
     <script>
-      if (typeof window.ethereum !== 'undefined') {
-        // after the page loads, ask the user to connect their metamask wallet if they approve we can then send requests to their wallet
-        window.ethereum.request({ method: 'eth_requestAccounts' })
+      const connectBtn = document.getElementById('connect-button')
+      
+      connectBtn.addEventListener('click', connect)
+      
+      async function connect() {
+        if (typeof window.ethereum !== 'undefined') {
+          // after the page loads, ask the user to connect their metamask wallet if they approve we can then send requests to their wallet
+          window.ethereum.request({ method: 'eth_requestAccounts' })
+        } else {
+          // if the user doesn't have metamask installed, show them a message to install it
+          alert('Please install MetaMask to use this dApp!')
+        }
       }
     </script>
   </body>
