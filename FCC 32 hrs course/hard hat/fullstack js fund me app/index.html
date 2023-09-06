@@ -49,13 +49,14 @@
     <!-- Javascript -->
     <script>
       const connectBtn = document.getElementById('connect-button')
-      
+
       connectBtn.addEventListener('click', connect)
-      
+
       async function connect() {
         if (typeof window.ethereum !== 'undefined') {
           // after the page loads, ask the user to connect their metamask wallet if they approve we can then send requests to their wallet
-          window.ethereum.request({ method: 'eth_requestAccounts' })
+          await window.ethereum.request({ method: 'eth_requestAccounts' })
+          console.log('connected to metamask')
         } else {
           // if the user doesn't have metamask installed, show them a message to install it
           alert('Please install MetaMask to use this dApp!')
