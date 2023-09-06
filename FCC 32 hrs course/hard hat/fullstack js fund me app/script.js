@@ -1,5 +1,5 @@
 import { ethers } from 'https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.min.js'
-import { abi } from './constants'
+import { abi, contractAddress } from './constants'
 
 const connectBtn = document.getElementById('connect-button')
 const fundBtn = document.getElementById('fund-button')
