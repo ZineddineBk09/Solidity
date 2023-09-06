@@ -1,4 +1,5 @@
 import { ethers } from 'https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.min.js'
+import { abi } from './constants'
 
 const connectBtn = document.getElementById('connect-button')
 const fundBtn = document.getElementById('fund-button')
@@ -7,7 +8,6 @@ connectBtn.onclick = connect
 fundBtn.onclick = fund(0.01)
 
 async function connect() {
-  console.log('connecting to metamask')
   if (typeof window.ethereum !== 'undefined') {
     // after the page loads, ask the user to connect their metamask wallet if they approve we can then send requests to their wallet
     await window.ethereum.request({ method: 'eth_requestAccounts' })
@@ -35,7 +35,9 @@ async function fund(ethAmount) {
     // provider is a connection to the blockchain
     const provider = new ethers.BrowserProvider(window.ethereum)
     // signer is a wallet with ETH in it (in this case the user's metamask wallet)
-    const signer = provider.getSingner()
-    console.log('wallet: ', signer)
+    const signer = await provider.getSigner()
+
+    // create a new contract instance
+    const contract = ''
   }
 }
