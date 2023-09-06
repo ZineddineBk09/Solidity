@@ -1,85 +1,120 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+// 1. Pragma
+pragma solidity ^0.8.7;
+// 2. Imports
+import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
+import "./lib/PriceConverterClean.sol";
 
-import "./lib/PriceConverter.sol";
+// 3. Interfaces, Libraries, Contracts
+error FundMe__NotOwner();
 
-// NOTE: we're using Sepolia as a test network
-// NOTE: contract can hold funds same as a wallet the only difference is that a contract can hold funds and do something with it (e.g. send it to another address) , because they an address
-
+/**@title A sample Funding Contract
+ * @author Patrick Collins
+ * @notice This contract is for creating a sample funding contract
+ * @dev This implements price feeds as our library
+ */
 contract FundMe {
-    // using PriceConverter for uint256 ==> which means we can call getConversionRate() on any uint256
+    // Type Declarations
     using PriceConverter for uint256;
 
-    uint256 public constant MINIMUM_USD = 50 * 1e18;
+    // State variables
+    uint256 public constant MINIMUM_USD = 50 * 10 ** 18;
+    address private immutable i_owner;
+    address[] private s_funders;
+    mapping(address => uint256) private s_addressToAmountFunded;
+    AggregatorV3Interface private s_priceFeed;
 
-    address[] public funders;
-    mapping(address => uint256) public addressToAmountFunded;
-    address public immutable owner;
+    // Events (we have none!)
 
-    // NOTE: this is a special function that is called when the contract is deployed
-    constructor() {
-        // msg.sender of the constructor is the address that deployed the contract ==> contract owner
-        owner = msg.sender;
-    }
-
-    function fund() public payable {
-        // things to take in consideration:
-        // 1. set a minimum amount of money to fund in USD
-        // 2. how to send ETH to this contract
-
-        // msg is a global variable that is available to us in solidity to get information about the transaction
-        // msg.value use wei as unit ==> 1e18 wei = 1 ETH
-        // if the value is less than 1 ETH then the transaction will revert and the ETH will be sent back to the sender and everything done in the transaction (fund function) will be reverted
-        // BUT the gas will be spent anyway
-        require(
-            msg.value.getConversionRate() >= MINIMUM_USD,
-            "You need to spend more ETH"
-        );
-
-        funders.push(msg.sender);
-        addressToAmountFunded[msg.sender] += msg.value;
-    }
-
-    // modifier is a function that can be run before another function to check if the condition is true or not
-    modifier isOwner() {
-        require(msg.sender == owner, "You're not the owner!");
+    // Modifiers
+    modifier onlyOwner() {
+        // require(msg.sender == i_owner);
+        if (msg.sender != i_owner) revert FundMe__NotOwner();
         _;
     }
 
-    // withdraw all the funds
-    function withdraw() public isOwner {
-        for (uint256 funderIndex; funderIndex < funders.length; funderIndex++) {
-            address funder = funders[funderIndex];
-            addressToAmountFunded[funder] = 0;
+    // Functions Order:
+    //// constructor
+    //// receive
+    //// fallback
+    //// external
+    //// public
+    //// internal
+    //// private
+    //// view / pure
 
-            // transfer the funds to the funder
-            // transfer() is a function that is available on the address type
-            // transfer() will transfer the funds from this contract to the funder
-            // transfer() will revert if it fails
-            // transfer() will return a boolean value
-            // payable is to check if the address is payable or not
-            payable(funder).transfer(addressToAmountFunded[funder]);
+    constructor(address priceFeed) {
+        s_priceFeed = AggregatorV3Interface(priceFeed);
+        i_owner = msg.sender;
+    }
 
-            // we have 3 ways to transfer funds:
-            // 1. transfer() ==> take only 2300 gas, if it's not enough then it will revert the tx
-            // 2. send() ==> take only 2300 gas, will return a boolean value, but if it fails it will not revert the tx ==> no money will be sent back to the contract. that's why we use it with a require() to check if it's true or not
-            // 3. call() ==> does not have gas limit, will return a boolean value, but if it fails it will not revert the tx ==> no money will be sent back to the contract. that's why we use it with a require() to check if it's true or not
+    /// @notice Funds our contract based on the ETH/USD price
+    function fund() public payable {
+        require(
+            msg.value.getConversionRate(s_priceFeed) >= MINIMUM_USD,
+            "You need to spend more ETH!"
+        );
+        // require(PriceConverter.getConversionRate(msg.value) >= MINIMUM_USD, "You need to spend more ETH!");
+        s_addressToAmountFunded[msg.sender] += msg.value;
+        s_funders.push(msg.sender);
+    }
+
+    function withdraw() public onlyOwner {
+        for (
+            uint256 funderIndex = 0;
+            funderIndex < s_funders.length;
+            funderIndex++
+        ) {
+            address funder = s_funders[funderIndex];
+            s_addressToAmountFunded[funder] = 0;
         }
-
-        // reset the funders array
-        funders = new address[](0);
+        s_funders = new address[](0);
+        // Transfer vs call vs Send
+        // payable(msg.sender).transfer(address(this).balance);
+        (bool success, ) = i_owner.call{value: address(this).balance}("");
+        require(success);
     }
 
-    // what happens if someone sends ETH to this contract without calling the fund() function? or any other function?
-    // in solidity there's a lot a special functions, but we need 2 here: receive() and fallback()
-    // receive() is a special function that is called when someone sends ETH to this contract without calling any function that is available on this contract
-    // fallback() is a special function that is called when someone sends ETH to this contract and the function that is called does not exist
-
-    receive() external payable {
-        fund();
+    function cheaperWithdraw() public onlyOwner {
+        address[] memory funders = s_funders;
+        // mappings can't be in memory, sorry!
+        for (
+            uint256 funderIndex = 0;
+            funderIndex < funders.length;
+            funderIndex++
+        ) {
+            address funder = funders[funderIndex];
+            s_addressToAmountFunded[funder] = 0;
+        }
+        s_funders = new address[](0);
+        // payable(msg.sender).transfer(address(this).balance);
+        (bool success, ) = i_owner.call{value: address(this).balance}("");
+        require(success);
     }
 
-    fallback() external payable {
-        fund();
+    /** @notice Gets the amount that an address has funded
+     *  @param fundingAddress the address of the funder
+     *  @return the amount funded
+     */
+    function getAddressToAmountFunded(
+        address fundingAddress
+    ) public view returns (uint256) {
+        return s_addressToAmountFunded[fundingAddress];
+    }
+
+    function getVersion() public view returns (uint256) {
+        return s_priceFeed.version();
+    }
+
+    function getFunder(uint256 index) public view returns (address) {
+        return s_funders[index];
+    }
+
+    function getOwner() public view returns (address) {
+        return i_owner;
+    }
+
+    function getPriceFeed() public view returns (AggregatorV3Interface) {
+        return s_priceFeed;
     }
 }
