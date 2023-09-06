@@ -32,12 +32,14 @@ async function fund(ethAmount) {
     // 1. connection to the blockchain
     // 2. a wallet with ETH in it
     // 3. a smart contract address that we want to interact with ==> ABI + address
+    
     // provider is a connection to the blockchain
     const provider = new ethers.BrowserProvider(window.ethereum)
+    
     // signer is a wallet with ETH in it (in this case the user's metamask wallet)
     const signer = await provider.getSigner()
 
-    // create a new contract instance
-    const contract = ''
+    // create a new contract instance (for the FundMe contract on the Sepolia testnetfix)
+    const contract = new ethers.Contract(contractAddress, abi, signer)
   }
 }
