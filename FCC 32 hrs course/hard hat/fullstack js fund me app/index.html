@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- icon -->
+    <link
+      rel="icon"
+      href="https://yt3.googleusercontent.com/ytc/AOPolaTs1IEit9EUooQAJkWS4SkpUE7oMDXYrjIgnOk1Kw=s900-c-k-c0x00ffffff-no-rj"
+    />
+    <title>Full Stack Javascript Fund Me App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body
+    class="w-screen h-screen overflow-hidden flex flex-col items-center bg-slate-700"
+  >
+    <!-- Header -->
+    <header
+      class="w-full h-20 flex items-center justify-between py-2 px-6 shadow-md"
+    >
+      <h1 class="text-xl font-semibold text-cyan-300">
+        Full Stack Fund Me App
+      </h1>
+      <nav class="flex items-center justify-between">
+        <a
+          href="#"
+          class="text-cyan-300 hover:text-cyan-400 px-4 py-2 rounded-md"
+          >Home</a
+        >
+        <a
+          href="#"
+          class="text-cyan-300 hover:text-cyan-400 px-4 py-2 rounded-md"
+          >About</a
+        >
+        <a
+          href="#"
+          class="text-cyan-300 hover:text-cyan-400 px-4 py-2 rounded-md"
+          >Contact</a
+        >
+      </nav>
+      <button
+        class="bg-gradient-to-r from-cyan-300 to-purple-600 hover:bg-cyan-400 px-4 py-2 rounded-md text-white font-semibold transition-all duration-300 hover:shadow-md hover:scale-[1.01]"
+      >
+        Connect Wallet
+      </button>
+    </header>
+
+    <!-- Javascript -->
+    <script>
+      if (typeof window.ethereum !== 'undefined') {
+        // after the page loads, ask the user to connect their metamask wallet if they approve we can then send requests to their wallet
+        window.ethereum.request({ method: 'eth_requestAccounts' })
+      }
+    </script>
+  </body>
+</html>
