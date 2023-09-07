@@ -54,21 +54,21 @@ To run this contract locally or on your preferred Ethereum testnet, follow these
 2.  Install the necessary dependencies:
 
     ```shell
-    npm install` or `yarn install` 
+    npm install`
 
 3.  Customize the contract parameters (e.g., entrance fee, interval) in the contract constructor located in `Raffle.sol`.
 
 4.  Compile the contract:
 
     ```shell
-    npx hardhat compile` or `yarn hardhat compile`
+    yarn hardhat compile `
 
 5.  Write tests for your contract (optional) and run them:
 
     ```shell
-    npx hardhat test` or `yarn hardhat test`
+    yarn hardhat test `
 
 Deployment
 ----------
 
-Deploying the contract to a live Ethereum network (e.g., Ethereum mainnet, Rinkeby testnet) requires setting up your deployment configurations and funding the contract with LINK tokens for Chainlink VRF. Consult Chainlink's documentation for deploying VRF-enabled contracts.
+Deploying the contract to a live Ethereum network (e.g., Ethereum mainnet, Sepolia testnet) requires setting up your deployment configurations and funding the contract with LINK tokens for Chainlink VRF. Consult Chainlink's documentation for deploying VRF-enabled contracts.
