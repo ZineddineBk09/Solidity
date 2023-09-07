@@ -190,4 +190,8 @@ abstract contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
     function getLatestTimeStamp() public view returns (uint256) {
         return s_lastTimestamp;
     }
+
+    function getRequestConfirmations() public pure returns (uint16) {
+        return REQUEST_CONFIRMATIONS;
+    }
 }
