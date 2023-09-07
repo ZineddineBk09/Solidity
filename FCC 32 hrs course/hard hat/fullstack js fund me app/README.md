@@ -2,7 +2,6 @@
 
 Welcome to the Full Stack Fund Me App project! This decentralized application (Dapp) allows users to fund a project with Ethereum (ETH) using MetaMask. This README will guide you through the project structure, setup, and usage.
 
-
 ![Project Logo](assets/fullstack%20js%20fund%20me%20app%2001.png)
 ![Project Logo](assets/fullstack%20js%20fund%20me%20app%2002.png)
 
@@ -63,6 +62,12 @@ Before you begin, ensure you have the following:
 
 4.  Click the "Fund" button to send the transaction to the smart contract.
 
+5.  Once the transaction is confirmed, the smart contract's balance will be updated.
+
+6.  Click the "Withdraw" button to send the transaction to withdraw the smart contract's balance.
+
+7.  Once the transaction is confirmed, the smart contract's balance will be updated.
+
 ## Javascript
 
 The `script.js` file contains JavaScript code for interacting with MetaMask and the Ethereum smart contract. Here are the main functions:
@@ -77,14 +82,13 @@ The `script.js` file contains JavaScript code for interacting with MetaMask and 
 
 - `withdraw()`: Sends a transaction to withdraw the current balance of the smart contract. It uses the Ethereum provider, signer, and the smart contract's ABI and address.
 
-
 ---
 
 You are now ready to use the Full Stack Fund Me App! Feel free to explore and customize this project to suit your needs. If you encounter any issues or have questions, please don't hesitate to reach out for assistance.
 
 Happy funding!
 
-Author: Zineddine Benkhaled 
-Contact: [Your Twitter](https://twitter.com/zinobk09) 
-[Email](mailto:benkhaledzineddine@gmail.com) 
+Author: Zineddine Benkhaled
+Contact: [Your Twitter](https://twitter.com/zinobk09)
+[Email](mailto:benkhaledzineddine@gmail.com)
 Project Link: <https://github.com/ZineddineBk09/Solidity/tree/main/FCC%2032%20hrs%20course/hard%20hat/fullstack%20js%20fund%20me%20app>
