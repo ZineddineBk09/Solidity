@@ -179,7 +179,7 @@ abstract contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
         return s_raffleState;
     }
 
-    function getNumWords() public view returns (uint32) {
+    function getNumWords() public pure returns (uint32) {
         return NUM_WORDS;
     }
 }
