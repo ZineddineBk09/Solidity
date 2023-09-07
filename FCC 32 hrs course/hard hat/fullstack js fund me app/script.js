@@ -38,7 +38,7 @@ async function fund() {
     // 3. a smart contract address that we want to interact with ==> ABI + address
 
     // provider is a connection to the blockchain
-    const provider = new ethers.Web3Provider(window.ethereum)
+    const provider = new ethers.BrowserProvider(window.ethereum)
 
     // signer is a wallet with ETH in it (in this case the user's metamask wallet)
     const signer = await provider.getSigner()
@@ -73,9 +73,9 @@ function listenForTxMine(txResponse, provider) {
   })
 }
 
-async function getBalance(){
-  if(typeof window.ethereum !== 'undefined'){
-    const provider=new ethers.providers.Web3Provider(window.ethereum)
-    const signer=provider.getSigner()
+async function getBalance() {
+  if (typeof window.ethereum !== 'undefined') {
+    const provider = new ethers.providers.BrowserProvider(window.ethereum)
+    const signer = provider.getSigner()
   }
 }
