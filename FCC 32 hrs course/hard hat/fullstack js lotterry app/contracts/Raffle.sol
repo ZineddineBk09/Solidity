@@ -22,6 +22,13 @@ error Raffle__UpkeepNotNeeded(
     RaffleState state
 );
 
+
+/**
+ * @title Raffle
+ * @author Zineddine Benkhaled
+ * @notice This contract is for creating an untamperable decentralized smart contract lottery
+ * @dev This contract uses Chainlink VRF to pick a winner and Chainlink Keeper to automate the process
+ */
 abstract contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
     // --------------- State variables --------------------
     uint256 private immutable i_entraceFee;
