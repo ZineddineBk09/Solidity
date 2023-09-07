@@ -45,11 +45,7 @@ To run this contract locally or on your preferred Ethereum testnet, follow these
    ```shell
    git clone https://github.com/ZineddineBk09/Solidity.git
     
-
-1.  Navigate to the project directory:
-
-    ```shell
-   cd FCC 32 hrs course/hard hat/fullstack js lotterry app/
+1.  Navigate to the project directory: fullstack js lotterry app
 
 2.  Install the necessary dependencies:
 
