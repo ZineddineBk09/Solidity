@@ -73,10 +73,18 @@ The `script.js` file contains JavaScript code for interacting with MetaMask and 
 
 - `listenForTxMine(txResponse, provider)`: Listens for the transaction to be mined and resolves when the transaction is confirmed.
 
+- `getBalance()`: Gets the current balance of the smart contract.
+
+- `withdraw()`: Sends a transaction to withdraw the current balance of the smart contract. It uses the Ethereum provider, signer, and the smart contract's ABI and address.
+
+
 ---
 
 You are now ready to use the Full Stack Fund Me App! Feel free to explore and customize this project to suit your needs. If you encounter any issues or have questions, please don't hesitate to reach out for assistance.
 
 Happy funding!
 
-Author: Your Name Contact: [Your Twitter](https://twitter.com/your_username) - [Email](mailto:your_email@example.com) Project Link: <https://github.com/your-username/fund-me-app>
+Author: Zineddine Benkhaled 
+Contact: [Your Twitter](https://twitter.com/zinobk09) 
+[Email](mailto:benkhaledzineddine@gmail.com) 
+Project Link: <https://github.com/ZineddineBk09/Solidity/tree/main/FCC%2032%20hrs%20course/hard%20hat/fullstack%20js%20fund%20me%20app>
