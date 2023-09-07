@@ -25,6 +25,7 @@ contract Raffle is VRFConsumerBaseV2 {
     // Events
     event RaffleEnter(address indexed player);
     event RequestedRaffleWinner(uint256 indexed requestId);
+    event WinnerPicked(address indexed winner);
 
     // Constructor
     constructor(
@@ -68,7 +69,7 @@ contract Raffle is VRFConsumerBaseV2 {
     }
 
     function fulfillRandomWords(
-        uint256 requestId,
+        uint256 /*requestId*/,
         uint256[] memory randomWords
     ) internal override {
         // We used internal because we want to call this function from the Chainlink VRF contract
@@ -83,6 +84,7 @@ contract Raffle is VRFConsumerBaseV2 {
         if (!success) {
             revert Raffle__TransferFailed();
         }
+        emit WinnerPicked(recentWinner);
     }
 
     // Getters
