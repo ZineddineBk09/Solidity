@@ -8,6 +8,7 @@ import "@chainlink/contracts/src/v0.8/interfaces/KeeperCompatibleInterface.sol";
 
 error Raffle__NotEnoughETHEntered();
 error Raffle__TransferFailed();
+error Raffle__NotOpen();
 
 abstract contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
     // --------------- ENUMS --------------------
@@ -51,9 +52,14 @@ abstract contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
         s_raffleState = RaffleState.Open;
     }
 
+    // --------------- Modifiers --------------------
     function enterRaffle() public payable {
         if (msg.value < i_entraceFee) {
             revert Raffle__NotEnoughETHEntered();
+        }
+
+        if (s_raffleState == RaffleState.Closed) {
+            revert Raffle__NotOpen();
         }
 
         s_players.push(payable(msg.sender));
@@ -66,6 +72,8 @@ abstract contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
     // docs: https://docs.chain.link/vrf/v2/subscription/examples/get-a-random-number
     function pickRandomWinner() external {
         // We used external because we want to call this function from another contract and to save gas
+        s_raffleState = RaffleState.Closed;
+
         uint256 requestId = i_vrfCoordinator.requestRandomWords(
             i_gasLane,
             i_subscriptionId,
