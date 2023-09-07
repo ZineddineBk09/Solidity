@@ -66,7 +66,12 @@ contract Raffle is VRFConsumerBaseV2 {
     function fulfillRandomWords(
         uint256 requestId,
         uint256[] memory randomWords
-    ) internal override {}
+    ) internal override {
+        // We used internal because we want to call this function from the Chainlink VRF contract
+        // randomWords is an array of 1 element because we set NUM_WORDS to 1 and it will be a number between 0 and 2^256
+        // we use the modulo operator to get a number between 0 and the number of players in the raffle to pick a winner
+        uint256 winnerIndex = randomWords[0] % s_players.length;
+    }
 
     // Getters
     function getEntraceFee() public view returns (uint256) {
