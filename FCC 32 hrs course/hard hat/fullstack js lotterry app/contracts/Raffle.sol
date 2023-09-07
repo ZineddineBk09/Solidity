@@ -27,6 +27,12 @@ contract Raffle {
         emit RaffleEnter(msg.sender);
     }
 
+    // Chainlink VRF
+    function pickRandomWinner() external {
+        // We used external because we want to call this function from another contract and to save gas
+        
+    }
+
     function getEntraceFee() public view returns (uint256) {
         return i_entraceFee;
     }
