@@ -43,27 +43,25 @@ To run this contract locally or on your preferred Ethereum testnet, follow these
 1. Clone the repository:
 
    ```shell
-   git clone https://github.com/your-username/solidity-raffle-contract.git `
+   git clone https://github.com/ZineddineBk09/Solidity.git `
+    
 
 1.  Navigate to the project directory:
 
-    shellCopy code
-
-    `cd solidity-raffle-contract`
+    ```shell
+   cd FCC\ 32\ hrs\ course/hard\ hat/fullstack\ js\ lotterry\ app/ `
 
 2.  Install the necessary dependencies:
 
-    shellCopy code
-
-    `npm install`
+    ```shell
+    npm install` or `yarn install` 
 
 3.  Customize the contract parameters (e.g., entrance fee, interval) in the contract constructor located in `Raffle.sol`.
 
 4.  Compile the contract:
 
-    shellCopy code
-
-    `npx hardhat compile` or `yarn hardhat compile`
+    ```shell
+    npx hardhat compile` or `yarn hardhat compile`
 
 5.  Write tests for your contract (optional) and run them:
 
