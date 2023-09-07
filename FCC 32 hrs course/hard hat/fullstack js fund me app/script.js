@@ -6,6 +6,7 @@ const fundBtn = document.getElementById('fund-button')
 const fundInput = document.getElementById('fund-input')
 const balance = document.getElementById('balance')
 const refreshBtn = document.getElementById('refresh-balance')
+const withdrawBtn = document.getElementById('withdraw-button')
 
 connectBtn.onclick = connect
 fundBtn.onclick = fund
