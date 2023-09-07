@@ -21,29 +21,28 @@
       <h1 class="text-xl font-semibold text-cyan-300">
         Full Stack Fund Me App
       </h1>
-      <nav class="flex items-center justify-between">
-        <a
-          href="#"
-          class="text-cyan-300 hover:text-cyan-400 px-4 py-2 rounded-md"
-          >Home</a
+
+      <div class="flex items-center gapx-4">
+        <!-- Wallet -->
+        <button
+          class="bg-gradient-to-r from-cyan-300 to-purple-600 hover:bg-cyan-400 px-4 py-2 rounded-md text-white text-sm font-medium transition-all duration-300 hover:shadow-md hover:scale-[1.01] cursor-pointer"
+          id="connect-button"
         >
-        <a
-          href="#"
-          class="text-cyan-300 hover:text-cyan-400 px-4 py-2 rounded-md"
-          >About</a
-        >
-        <a
-          href="#"
-          class="text-cyan-300 hover:text-cyan-400 px-4 py-2 rounded-md"
-          >Contact</a
-        >
-      </nav>
-      <button
-        class="bg-gradient-to-r from-cyan-300 to-purple-600 hover:bg-cyan-400 px-4 py-2 rounded-md text-white text-sm font-medium transition-all duration-300 hover:shadow-md hover:scale-[1.01] cursor-pointer"
-        id="connect-button"
-      >
-        Connect Wallet
-      </button>
+          Connect Wallet
+        </button>
+
+        <!-- Balance -->
+        <div class="px-4 py-2 rounded-md text-white text-sm font-medium">
+          Balance: <span id="balance">0</span> ETH
+          <button
+            id="refresh-balance"
+            title="Refresh Balance"
+            class="transition-all duration-300 hover:shadow-md hover:scale-[1.01] cursor-pointer"
+          >
+            🔄
+          </button>
+        </div>
+      </div>
     </header>
 
     <!-- Body -->
@@ -51,7 +50,7 @@
       <div class="w-1/2 h-1/2 flex flex items-center justify-center gap-x-3">
         <input
           type="text"
-          class="px-6 py-2 rounded-md text-white bg-transparent border border-slate-500 placeholder-slate-500 outline-none "
+          class="px-6 py-2 rounded-md text-white bg-transparent border border-slate-500 placeholder-slate-500 outline-none"
           placeholder="ETH"
           id="fund-input"
         />
