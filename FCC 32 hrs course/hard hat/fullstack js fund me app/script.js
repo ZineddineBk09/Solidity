@@ -3,6 +3,7 @@ import { abi, contractAddress } from './constants.js'
 
 const connectBtn = document.getElementById('connect-button')
 const fundBtn = document.getElementById('fund-button')
+const fundInput = document.getElementById('fund-input')
 const balance = document.getElementById('balance')
 const refreshBtn = document.getElementById('refresh-balance')
 
@@ -29,7 +30,7 @@ async function connect() {
 }
 
 async function fund() {
-  const ethAmount = document.getElementById('fund-input').value
+  const ethAmount = fundInput.value
 
   if (!ethAmount) return alert('Please enter an amount to fund!')
 
@@ -52,11 +53,14 @@ async function fund() {
     // Transactions
     try {
       const transactionResponse = await contract.fund({
-        value: ethers.parseEther(ethAmount + ''),
+        value: ethers.parseEther(ethAmount),
       })
 
       await listenForTxMine(transactionResponse, provider)
       console.log('Transaction complete!')
+      alert('Transaction completed successfully  🎉🎉')
+      fundInput.value = ''
+      await getBalance()
     } catch (error) {
       console.log(error)
     }
@@ -80,8 +84,11 @@ async function getBalance() {
   if (typeof window.ethereum !== 'undefined') {
     const provider = new ethers.BrowserProvider(window.ethereum)
     const eth = await provider.getBalance(contractAddress)
+    console.log('Ether balance: ' + ethers.formatEther(eth))
     balance.innerHTML = ethers.formatEther(eth).slice(0, 5)
   }
 }
+
+
 
 await getBalance()
