@@ -92,7 +92,26 @@ async function getBalance() {
 }
 
 async function withdraw() {
+  if (typeof window.ethereum !== 'undefined') {
+    const provider = new ethers.BrowserProvider(window.ethereum)
+    const signer = await provider.getSigner()
+    const contract = new ethers.Contract(contractAddress, abi, signer)
 
+    try {
+      const transactionResponse = await contract.withdraw()
+      await listenForTxMine(transactionResponse, provider)
+      console.log('Withdraw complete!')
+      alert('Withdraw completed successfully  🎉🎉')
+      await getBalance()
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
 
-await getBalance()
+await getBalance().then(() => {
+  // if the funds==0 hide the withdraw button
+  if (balance.innerHTML == 0) {
+    withdrawBtn.style.display = 'none'
+  }
+})
