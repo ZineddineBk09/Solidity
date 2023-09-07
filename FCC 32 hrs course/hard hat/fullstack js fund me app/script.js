@@ -1,11 +1,11 @@
 import { ethers } from 'https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.min.js'
-import { abi, contractAddress } from './constants'
+import { abi, contractAddress } from './constants.js'
 
 const connectBtn = document.getElementById('connect-button')
 const fundBtn = document.getElementById('fund-button')
 
 connectBtn.onclick = connect
-fundBtn.onclick = fund(0.01)
+fundBtn.onclick = fund
 
 async function connect() {
   if (typeof window.ethereum !== 'undefined') {
@@ -25,21 +25,48 @@ async function connect() {
   }
 }
 
-async function fund(ethAmount) {
+async function fund() {
+  const ethAmount = '0.001'
+
   console.log('funding project with ' + ethAmount + ' ETH')
   if (typeof window.ethereum !== 'undefined') {
     // To send a transaction we need:
     // 1. connection to the blockchain
     // 2. a wallet with ETH in it
     // 3. a smart contract address that we want to interact with ==> ABI + address
-    
+
     // provider is a connection to the blockchain
     const provider = new ethers.BrowserProvider(window.ethereum)
-    
+
     // signer is a wallet with ETH in it (in this case the user's metamask wallet)
     const signer = await provider.getSigner()
 
     // create a new contract instance (for the FundMe contract on the Sepolia testnetfix)
     const contract = new ethers.Contract(contractAddress, abi, signer)
+
+    // Transactions
+    try {
+      const transactionResponse = await contract.fund({
+        value: ethers.parseEther(ethAmount + ''),
+      })
+
+      await listenForTxMine(transactionResponse, provider)
+      console.log('Transaction complete!')
+    } catch (error) {
+      console.log(error)
+    }
   }
+}
+
+function listenForTxMine(txResponse, provider) {
+  console.log('Mining ' + txResponse.hash + '...')
+
+  return new Promise((resolve, reject) => {
+    //listen for when the transaction is mined
+    provider.once(txResponse.hash, (receipt) => {
+      console.log('Mined ' + txResponse.hash + '!')
+      console.log(receipt)
+      resolve(receipt)
+    })
+  })
 }
