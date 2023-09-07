@@ -26,6 +26,8 @@ abstract contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
     uint16 private constant REQUEST_CONFIRMATIONS = 3;
     uint32 private immutable i_callbackGasLimit;
     uint32 private constant NUM_WORDS = 1;
+    uint256 private s_lastTimestamp;
+    uint256 private immutable s_interval;
 
     // --------------- Lottery variables --------------------
     address private s_recentWinner;
@@ -42,7 +44,8 @@ abstract contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
         uint256 _entranceFee,
         bytes32 _gasLane,
         uint64 _subscriptionId,
-        uint32 _callbackGasLimit
+        uint32 _callbackGasLimit,
+        uint256 _interval
     ) VRFConsumerBaseV2(vrfCoordinatorV2) {
         i_entraceFee = _entranceFee;
         i_vrfCoordinator = VRFCoordinatorV2Interface(vrfCoordinatorV2);
@@ -50,6 +53,8 @@ abstract contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
         i_subscriptionId = _subscriptionId;
         i_callbackGasLimit = _callbackGasLimit;
         s_raffleState = RaffleState.Open;
+        s_lastTimestamp = block.timestamp;
+        s_interval = _interval;
     }
 
     // --------------- Modifiers --------------------
@@ -122,7 +127,15 @@ abstract contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
         external
         override
         returns (bool upkeepNeeded, bytes memory /* performData */)
-    {}
+    {
+        bool isOpen = s_raffleState == RaffleState.Open;
+        bool timePassed = ((block.timestamp - s_lastTimestamp) > s_interval);
+        bool hasPlayers = s_players.length > 0;
+        bool hasBalance = address(this).balance > 0;
+        bool upKeepNeeded = isOpen && timePassed && hasPlayers && hasBalance;
+
+        return (upKeepNeeded, "");
+    }
 
     // --------------- Getters --------------------
     function getEntraceFee() public view returns (uint256) {
