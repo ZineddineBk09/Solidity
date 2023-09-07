@@ -9,7 +9,13 @@ import "@chainlink/contracts/src/v0.8/interfaces/KeeperCompatibleInterface.sol";
 error Raffle__NotEnoughETHEntered();
 error Raffle__TransferFailed();
 
-contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
+abstract contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
+    // --------------- ENUMS --------------------
+    enum RaffleState {
+        Open,
+        Closed
+    }
+
     // --------------- State variables --------------------
     uint256 private immutable i_entraceFee;
     address payable[] private s_players;
@@ -22,6 +28,7 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
 
     // --------------- Lottery variables --------------------
     address private s_recentWinner;
+    RaffleState private s_raffleState;
 
     // --------------- Events --------------------
     event RaffleEnter(address indexed player);
@@ -41,6 +48,7 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
         i_gasLane = _gasLane;
         i_subscriptionId = _subscriptionId;
         i_callbackGasLimit = _callbackGasLimit;
+        s_raffleState = RaffleState.Open;
     }
 
     function enterRaffle() public payable {
