@@ -89,6 +89,5 @@ You are now ready to use the Full Stack Fund Me App! Feel free to explore and cu
 Happy funding!
 
 - Author: Zineddine Benkhaled
-- Contact: [Your Twitter](https://twitter.com/zinobk09)
-- [Email](mailto:benkhaledzineddine@gmail.com)
-- Project Link: <https://github.com/ZineddineBk09/Solidity/tree/main/FCC%2032%20hrs%20course/hard%20hat/fullstack%20js%20fund%20me%20app>
+- Twitter: [Zineddine Benkhaled](https://twitter.com/zinobk09)
+- Email: [benkhaledzineddine@gmail.com](mailto:benkhaledzineddine@gmail.com)
