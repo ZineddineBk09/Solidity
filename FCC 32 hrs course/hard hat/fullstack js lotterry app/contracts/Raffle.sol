@@ -36,10 +36,11 @@ contract Raffle is VRFConsumerBaseV2 {
     }
 
     // Chainlink VRF
+    // docs: https://docs.chain.link/vrf/v2/subscription/examples/get-a-random-number
     function pickRandomWinner() external {
         // We used external because we want to call this function from another contract and to save gas
         i_vrfCoordinator.requestRandomWords(
-            keyHash,
+            keyHash, // maximum 
             s_subscriptionId,
             requestConfirmations,
             callbackGasLimit,
