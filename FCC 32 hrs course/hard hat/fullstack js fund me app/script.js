@@ -3,6 +3,8 @@ import { abi, contractAddress } from './constants.js'
 
 const connectBtn = document.getElementById('connect-button')
 const fundBtn = document.getElementById('fund-button')
+const balance = document.getElementById('balance')
+const refreshBtn = document.getElementById('refresh-balance')
 
 connectBtn.onclick = connect
 fundBtn.onclick = fund
