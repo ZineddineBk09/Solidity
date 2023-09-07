@@ -9,8 +9,8 @@ import "@chainlink/contracts/src/v0.8/interfaces/KeeperCompatibleInterface.sol";
 error Raffle__NotEnoughETHEntered();
 error Raffle__TransferFailed();
 
-contract Raffle is VRFConsumerBaseV2,KeeperCompatibleInterface {
-    // State variables
+contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
+    // --------------- State variables --------------------
     uint256 private immutable i_entraceFee;
     address payable[] private s_players;
     VRFCoordinatorV2Interface private immutable i_vrfCoordinator;
@@ -20,15 +20,15 @@ contract Raffle is VRFConsumerBaseV2,KeeperCompatibleInterface {
     uint32 private immutable i_callbackGasLimit;
     uint32 private constant NUM_WORDS = 1;
 
-    // Lottery variables
+    // --------------- Lottery variables --------------------
     address private s_recentWinner;
 
-    // Events
+    // --------------- Events --------------------
     event RaffleEnter(address indexed player);
     event RequestedRaffleWinner(uint256 indexed requestId);
     event WinnerPicked(address indexed winner);
 
-    // Constructor
+    // --------------- Constructor --------------------
     constructor(
         address vrfCoordinatorV2,
         uint256 _entranceFee,
@@ -54,7 +54,7 @@ contract Raffle is VRFConsumerBaseV2,KeeperCompatibleInterface {
         emit RaffleEnter(msg.sender);
     }
 
-    // Chainlink VRF
+    // --------------- Chainlink VRF --------------------
     // docs: https://docs.chain.link/vrf/v2/subscription/examples/get-a-random-number
     function pickRandomWinner() external {
         // We used external because we want to call this function from another contract and to save gas
@@ -68,8 +68,6 @@ contract Raffle is VRFConsumerBaseV2,KeeperCompatibleInterface {
 
         emit RequestedRaffleWinner(requestId);
     }
-
-    function checkUpkeep(bytes calldata) external {}
 
     function fulfillRandomWords(
         uint256 /*requestId*/,
@@ -90,7 +88,21 @@ contract Raffle is VRFConsumerBaseV2,KeeperCompatibleInterface {
         emit WinnerPicked(recentWinner);
     }
 
-    // Getters
+    // --------------- Chainlink Keeper --------------------
+    // it will return true if:
+    //      1. Our time interval has passed
+    //      2. The lottery should have at least 1 player
+    //      3. The lottery should be funded with LINK
+    //      4. The lottery should be in "open" state (to prevent new players from entering while we pick a winner)
+    function checkUpkeep(
+        bytes calldata /* checkData */
+    )
+        external
+        override
+        returns (bool upkeepNeeded, bytes memory /* performData */)
+    {}
+
+    // --------------- Getters --------------------
     function getEntraceFee() public view returns (uint256) {
         return i_entraceFee;
     }
