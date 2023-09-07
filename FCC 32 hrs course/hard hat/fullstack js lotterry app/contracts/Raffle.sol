@@ -6,6 +6,7 @@ import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
 
 error Raffle__NotEnoughETHEntered();
+error Raffle__TransferFailed();
 
 contract Raffle is VRFConsumerBaseV2 {
     // State variables
@@ -17,6 +18,9 @@ contract Raffle is VRFConsumerBaseV2 {
     uint16 private constant REQUEST_CONFIRMATIONS = 3;
     uint32 private immutable i_callbackGasLimit;
     uint32 private constant NUM_WORDS = 1;
+
+    // Lottery variables
+    address private s_recentWinner;
 
     // Events
     event RaffleEnter(address indexed player);
@@ -71,6 +75,11 @@ contract Raffle is VRFConsumerBaseV2 {
         // randomWords is an array of 1 element because we set NUM_WORDS to 1 and it will be a number between 0 and 2^256
         // we use the modulo operator to get a number between 0 and the number of players in the raffle to pick a winner
         uint256 winnerIndex = randomWords[0] % s_players.length;
+        address payable recentWinner = s_players[winnerIndex];
+        s_recentWinner = recentWinner;
+
+        // Transfer the balance of the contract to the winner
+        (bool success, ) = recentWinner.call{value: address(this).balance}("");
     }
 
     // Getters
@@ -80,5 +89,9 @@ contract Raffle is VRFConsumerBaseV2 {
 
     function getPlayer(uint256 index) public view returns (address) {
         return s_players[index];
+    }
+
+    function getRecentWinner() public view returns (address) {
+        return s_recentWinner;
     }
 }
