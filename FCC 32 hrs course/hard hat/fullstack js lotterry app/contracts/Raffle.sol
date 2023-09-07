@@ -6,17 +6,23 @@ import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/KeeperCompatibleInterface.sol";
 
+// --------------- ENUMS --------------------
+enum RaffleState {
+    Open,
+    Closed
+}
+
+// --------------- Errors --------------------
 error Raffle__NotEnoughETHEntered();
 error Raffle__TransferFailed();
 error Raffle__NotOpen();
+error Raffle__UpkeepNotNeeded(
+    uint256 balance,
+    uint256 playersLength,
+    RaffleState state
+);
 
 abstract contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
-    // --------------- ENUMS --------------------
-    enum RaffleState {
-        Open,
-        Closed
-    }
-
     // --------------- State variables --------------------
     uint256 private immutable i_entraceFee;
     address payable[] private s_players;
@@ -75,7 +81,16 @@ abstract contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
 
     // --------------- Chainlink VRF --------------------
     // docs: https://docs.chain.link/vrf/v2/subscription/examples/get-a-random-number
-    function performUpkeep() external {
+    function performUpkeep(bytes calldata /* performData */) external override {
+        (bool upkeepNeeded, ) = checkUpkeep("");
+        if (!upkeepNeeded) {
+            revert Raffle__UpkeepNotNeeded(
+                address(this).balance,
+                s_players.length,
+                s_raffleState
+            );
+        }
+
         // We used external because we want to call this function from another contract and to save gas
         s_raffleState = RaffleState.Closed;
 
@@ -107,6 +122,9 @@ abstract contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
         // reset the players array
         delete s_players;
 
+        // reset the last timestamp
+        s_lastTimestamp = block.timestamp;
+
         // Transfer the balance of the contract to the winner
         (bool success, ) = recentWinner.call{value: address(this).balance}("");
         if (!success) {
@@ -124,7 +142,7 @@ abstract contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
     function checkUpkeep(
         bytes calldata /* checkData */
     )
-        external
+        public
         override
         returns (bool upkeepNeeded, bytes memory /* performData */)
     {
@@ -133,6 +151,8 @@ abstract contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
         bool hasPlayers = s_players.length > 0;
         bool hasBalance = address(this).balance > 0;
         upkeepNeeded = isOpen && timePassed && hasPlayers && hasBalance;
+
+        // after check up keep is finished, if upkeepNeeded is true, we will call performUpkeep automatically by the Chainlink Keeper
     }
 
     // --------------- Getters --------------------
