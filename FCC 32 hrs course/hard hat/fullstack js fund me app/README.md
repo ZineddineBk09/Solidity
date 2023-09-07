@@ -3,7 +3,8 @@
 Welcome to the Full Stack Fund Me App project! This decentralized application (Dapp) allows users to fund a project with Ethereum (ETH) using MetaMask. This README will guide you through the project structure, setup, and usage.
 
 
-![Project Logo](assets/fullstack%20js%20fund%20me%20app.png)
+![Project Logo](assets/fullstack%20js%20fund%20me%20app%2001.png)
+![Project Logo](assets/fullstack%20js%20fund%20me%20app%2002.png)
 
 ## Table of Contents
 
