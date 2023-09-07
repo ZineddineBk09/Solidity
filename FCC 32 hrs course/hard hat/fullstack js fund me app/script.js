@@ -8,6 +8,7 @@ const refreshBtn = document.getElementById('refresh-balance')
 
 connectBtn.onclick = connect
 fundBtn.onclick = fund
+refreshBtn.onclick = getBalance
 
 async function connect() {
   if (typeof window.ethereum !== 'undefined') {
@@ -77,7 +78,10 @@ function listenForTxMine(txResponse, provider) {
 
 async function getBalance() {
   if (typeof window.ethereum !== 'undefined') {
-    const provider = new ethers.providers.BrowserProvider(window.ethereum)
-    const signer = provider.getSigner()
+    const provider = new ethers.BrowserProvider(window.ethereum)
+    const eth = await provider.getBalance(contractAddress)
+    balance.innerHTML = ethers.formatEther(eth).slice(0, 5)
   }
 }
+
+await getBalance()
