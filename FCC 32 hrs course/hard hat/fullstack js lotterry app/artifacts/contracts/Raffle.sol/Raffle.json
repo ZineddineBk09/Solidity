@@ -148,7 +148,7 @@
           "type": "uint32"
         }
       ],
-      "stateMutability": "view",
+      "stateMutability": "pure",
       "type": "function"
     },
     {
