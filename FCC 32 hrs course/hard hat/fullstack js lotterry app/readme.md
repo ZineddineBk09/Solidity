@@ -49,7 +49,7 @@ To run this contract locally or on your preferred Ethereum testnet, follow these
 1.  Navigate to the project directory:
 
     ```shell
-   cd FCC\ 32\ hrs\ course/hard\ hat/fullstack\ js\ lotterry\ app/ `
+   cd "FCC 32 hrs course/hard hat/fullstack js lotterry app/" `
 
 2.  Install the necessary dependencies:
 
@@ -65,9 +65,8 @@ To run this contract locally or on your preferred Ethereum testnet, follow these
 
 5.  Write tests for your contract (optional) and run them:
 
-    shellCopy code
-
-    `npx hardhat test`
+    ```shell
+    npx hardhat test` or `yarn hardhat test`
 
 Deployment
 ----------
