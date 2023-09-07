@@ -11,6 +11,7 @@ const withdrawBtn = document.getElementById('withdraw-button')
 connectBtn.onclick = connect
 fundBtn.onclick = fund
 refreshBtn.onclick = getBalance
+withdrawBtn.onclick = withdraw
 
 async function connect() {
   if (typeof window.ethereum !== 'undefined') {
@@ -90,6 +91,8 @@ async function getBalance() {
   }
 }
 
+async function withdraw() {
 
+}
 
 await getBalance()
