@@ -22,7 +22,6 @@ error Raffle__UpkeepNotNeeded(
     RaffleState state
 );
 
-
 /**
  * @title Raffle
  * @author Zineddine Benkhaled
@@ -147,9 +146,10 @@ abstract contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
     //      3. The lottery should be funded with LINK
     //      4. The lottery should be in "open" state (to prevent new players from entering while we pick a winner)
     function checkUpkeep(
-        bytes calldata /* checkData */
+        bytes memory /* checkData */
     )
         public
+        view
         override
         returns (bool upkeepNeeded, bytes memory /* performData */)
     {
@@ -173,5 +173,13 @@ abstract contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
 
     function getRecentWinner() public view returns (address) {
         return s_recentWinner;
+    }
+
+    function getRaffleState() public view returns (RaffleState) {
+        return s_raffleState;
+    }
+
+    function getNumWords() public view returns (uint32) {
+        return NUM_WORDS;
     }
 }
