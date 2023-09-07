@@ -58,7 +58,7 @@ abstract contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
             revert Raffle__NotEnoughETHEntered();
         }
 
-        if (s_raffleState == RaffleState.Closed) {
+        if (s_raffleState != RaffleState.Open) {
             revert Raffle__NotOpen();
         }
 
@@ -95,6 +95,12 @@ abstract contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
         uint256 winnerIndex = randomWords[0] % s_players.length;
         address payable recentWinner = s_players[winnerIndex];
         s_recentWinner = recentWinner;
+
+        // update the state of the raffle
+        s_raffleState = RaffleState.Open;
+
+        // reset the players array
+        delete s_players;
 
         // Transfer the balance of the contract to the winner
         (bool success, ) = recentWinner.call{value: address(this).balance}("");
