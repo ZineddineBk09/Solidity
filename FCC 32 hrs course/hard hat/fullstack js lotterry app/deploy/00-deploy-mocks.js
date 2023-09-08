@@ -14,5 +14,10 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
       "Local network detected! Deploying contracts to local network and printing contract's address to console."
     )
     // deploy a mock vrf coordinator
+    await deploy('VRFCoordinatorV2Mock', {
+      from: deployer,
+      log: true,
+      args: [],
+    })
   }
 }
