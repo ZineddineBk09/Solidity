@@ -7,6 +7,7 @@ require('hardhat-contract-sizer')
 require('dotenv').config()
 
 const SEPOLIA_RPC_URL = process.env.RPC_ALCHEMY_SEPOLIA_SERVER_URL || ''
+const PRIVATE_KEY = process.env.METAMASK_ACCOUNT_PRIVATE_KEY || ''
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
@@ -14,11 +15,13 @@ module.exports = {
   networks: {
     hardhat: {
       chainId: 31337,
-      blockConfirmation: 1,
+      blockConfirmations: 1,
     },
     sepolia: {
       chainId: 11155111,
-      blockConfirmation: 6,
+      blockConfirmations: 6,
+      url: SEPOLIA_RPC_URL,
+      accounts: [process.env.PRIVATE_KEY],
 
     },
   },
