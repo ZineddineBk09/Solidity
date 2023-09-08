@@ -23,7 +23,7 @@ module.exports = {
       // we choose 6 because it is the default number of block confirmations for most exchanges
       blockConfirmations: 6, 
       url: SEPOLIA_RPC_URL,
-      accounts: [process.env.PRIVATE_KEY],
+      accounts: [PRIVATE_KEY],
     },
   },
   solidity: '0.8.19',
