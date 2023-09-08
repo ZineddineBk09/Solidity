@@ -19,10 +19,11 @@ module.exports = {
     },
     sepolia: {
       chainId: 11155111,
-      blockConfirmations: 6,
+      // blockConfirmations represents the number of blocks that need to be mined on top of the block that includes the transaction in order for the transaction to be considered confirmed.
+      // we choose 6 because it is the default number of block confirmations for most exchanges
+      blockConfirmations: 6, 
       url: SEPOLIA_RPC_URL,
       accounts: [process.env.PRIVATE_KEY],
-
     },
   },
   solidity: '0.8.19',
