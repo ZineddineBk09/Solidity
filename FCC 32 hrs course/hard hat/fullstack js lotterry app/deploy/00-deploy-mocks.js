@@ -1,7 +1,9 @@
 // Because our Raffle contract has a dependency on the VRF Coordinator contract, we need to deploy the VRF Coordinator contract first. We can do this by adding the following code to the top of the file:
 // docs: https://docs.chain.link/vrf/v2/subscription/supported-networks
-const { network } = require('hardhat')
+const { network, ethers } = require('hardhat')
 const { developmentChains } = require('../helper-hardhat-config')
+
+const BASE_FEE = ethers.parseEther('0.25') // 0.25 LINK is the premium ==> it costs 0.25 LINK per request
 
 module.exports = async function ({ getNamedAccounts, deployments }) {
   const { deploy, log } = deployments
