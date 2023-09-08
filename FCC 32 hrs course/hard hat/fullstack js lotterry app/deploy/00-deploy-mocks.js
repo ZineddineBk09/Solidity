@@ -1,3 +1,5 @@
+// Because our Raffle contract has a dependency on the VRF Coordinator contract, we need to deploy the VRF Coordinator contract first. We can do this by adding the following code to the top of the file:
+
 const { network } = require('hardhat')
 const { developmentChains } = require('../helper-hardhat-config')
 
