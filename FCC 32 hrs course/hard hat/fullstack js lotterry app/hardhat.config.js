@@ -26,6 +26,7 @@ module.exports = {
     },
   },
   solidity: '0.8.19',
+  // we need namedAccounts for the deploy scripts, so we can use the deployer address in the scripts
   namedAccounts: {
     deployer: {
       default: 0,
