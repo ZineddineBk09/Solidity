@@ -4,6 +4,8 @@ const { network, ethers } = require('hardhat')
 const { developmentChains } = require('../helper-hardhat-config')
 
 const BASE_FEE = ethers.parseEther('0.25') // 0.25 LINK is the premium ==> it costs 0.25 LINK per request
+// The gas price link fluctuates based on ETH price, so we need to get the latest gas price link from the network
+const GAS_PRICE_LINK = 1e9 // 1 gwei
 
 module.exports = async function ({ getNamedAccounts, deployments }) {
   const { deploy, log } = deployments
@@ -19,7 +21,15 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
     await deploy('VRFCoordinatorV2Mock', {
       from: deployer,
       log: true,
-      args: [],
+      args: [BASE_FEE, GAS_PRICE_LINK],
     })
+
+    log(
+      'VRFCoordinatorV2Mock deployed to:',
+      (await deployments.get('VRFCoordinatorV2Mock')).address
+    )
+    log(
+      '==========================================================================================='
+    )
   }
 }
