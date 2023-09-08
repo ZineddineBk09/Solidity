@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT 
+// SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.7;
 
@@ -52,7 +52,7 @@ abstract contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
 
     // --------------- Constructor --------------------
     constructor(
-        address vrfCoordinatorV2,
+        address vrfCoordinatorV2, // this is an address of the Chainlink VRF contract, so before we deploy this contract we need to deploy the Chainlink VRF contract
         uint256 _entranceFee,
         bytes32 _gasLane,
         uint64 _subscriptionId,
