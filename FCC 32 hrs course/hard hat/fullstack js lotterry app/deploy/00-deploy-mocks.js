@@ -3,7 +3,7 @@
 const { network, ethers } = require('hardhat')
 const { developmentChains } = require('../helper-hardhat-config')
 
-const BASE_FEE = ethers.parseEther('0.25') // 0.25 LINK is the premium ==> it costs 0.25 LINK per request
+const BASE_FEE = ethers.utils.parseEther('0.25').toString() // 0.25 LINK is the premium ==> it costs 0.25 LINK per request
 // The gas price link fluctuates based on ETH price, so we need to get the latest gas price link from the network
 const GAS_PRICE_LINK = 1e9 // 1 gwei
 
