@@ -10,6 +10,7 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
   let vrfCoordinatorV2Address, subscriptionId
   const entranceFee = networkConfig[chainId]['entranceFee']
   const gasLane = networkConfig[chainId]['gasLane']
+  const callbackGasLimit = networkConfig[chainId]['callbackGasLimit']
 
   // check if we're in a local development environment
   if (developmentChains.includes(network.name)) {
@@ -33,7 +34,13 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
 
   const raffle = await deploy('Raffle', {
     from: deployer,
-    args: [vrfCoordinatorV2Address, entranceFee, gasLane, subscriptionId],
+    args: [
+      vrfCoordinatorV2Address,
+      entranceFee,
+      gasLane,
+      subscriptionId,
+      callbackGasLimit,
+    ],
     log: true,
     waitConfirmations: network.config.blockConfirmations || 1,
   })
