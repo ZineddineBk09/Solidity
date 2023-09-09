@@ -5,7 +5,7 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
   const { deploy, log } = deployments
   const { deployer } = await getNamedAccounts()
   const chainId = network.config.chainId
-  let vrfCoordinatorV2Address
+  let vrfCoordinatorV2Address, subscriptionId
   const entranceFee = networkConfig[chainId]['entranceFee']
   const gasLane = networkConfig[chainId]['gasLane']
 
@@ -15,6 +15,10 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
       'VRFCoordinatorV2Mock'
     )
     vrfCoordinatorV2Address = vrfCoordinatorV2Mock.address
+
+    const txResponse = await vrfCoordinatorV2Mock.createSubscription()
+    const txReceipt = await txResponse.wait(1)
+    subscriptionId=txReceipt.events[0].args[0].subId
   } else {
     vrfCoordinatorV2Address = networkConfig[chainId]['vrfCoordinatorV2']
   }
