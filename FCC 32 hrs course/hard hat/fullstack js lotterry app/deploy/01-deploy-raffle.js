@@ -11,6 +11,7 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
   const entranceFee = networkConfig[chainId]['entranceFee']
   const gasLane = networkConfig[chainId]['gasLane']
   const callbackGasLimit = networkConfig[chainId]['callbackGasLimit']
+  const interval = networkConfig[chainId]['interval']
 
   // check if we're in a local development environment
   if (developmentChains.includes(network.name)) {
@@ -40,6 +41,7 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
       gasLane,
       subscriptionId,
       callbackGasLimit,
+      interval,
     ],
     log: true,
     waitConfirmations: network.config.blockConfirmations || 1,
