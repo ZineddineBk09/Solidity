@@ -10,6 +10,7 @@ const networkConfig = {
     entraceFee: ethers.utils.parseEther('0.01'),
     gasLane:
       '0x8af398995b04c28e9951adb9721ef74c74f93e6a478f39e7e0777be13527e7ef',
+    subscriptionId: '1',
   },
   31337: {
     name: 'hardhat',
