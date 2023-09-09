@@ -55,7 +55,7 @@ async function fund() {
     // Transactions
     try {
       const transactionResponse = await contract.fund({
-        value: ethers.parseEther(ethAmount),
+        value: ethers.utils.parseEther(ethAmount),
       })
 
       await listenForTxMine(transactionResponse, provider)
