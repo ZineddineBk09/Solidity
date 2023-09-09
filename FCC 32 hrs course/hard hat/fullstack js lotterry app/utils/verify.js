@@ -1,6 +1,6 @@
 const { run } = reauire('hardhat')
 
-const verify = async (contractAddress, args) => {
+export const verify = async (contractAddress, args) => {
   console.log('Verifying contract...⌛⌛')
   try {
     await run('verify:verify', {
