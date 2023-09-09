@@ -12,6 +12,7 @@ const networkConfig = {
       '0x8af398995b04c28e9951adb9721ef74c74f93e6a478f39e7e0777be13527e7ef',
     subscriptionId: '1',
     callbackGasLimit: '500000',
+    interval:'30'
   },
   31337: {
     name: 'hardhat',
@@ -19,6 +20,7 @@ const networkConfig = {
     gasLane:
       '0x8af398995b04c28e9951adb9721ef74c74f93e6a478f39e7e0777be13527e7ef',
     callbackGasLimit: '500000',
+    interval:'30'
   },
 }
 
