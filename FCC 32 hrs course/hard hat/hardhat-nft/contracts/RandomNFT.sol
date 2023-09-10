@@ -47,6 +47,8 @@ contract RandomNFT {
             i_callbackGasLimit,
             NUM_WORDS
         );
+
+        s_requestIdToSender[requestId] = msg.sender;
     }
 
     function fullfillRandomWords(
