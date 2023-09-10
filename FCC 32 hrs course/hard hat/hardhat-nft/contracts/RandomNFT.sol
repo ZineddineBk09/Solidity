@@ -22,6 +22,11 @@ contract RandomNFT {
     uint16 private constant REQUEST_CONFIRMATIONS = 3; // 3 is the minimum
     uint32 private constant NUM_WORDS = 1; // number of random values returned
 
+    // VRF Helpers
+    // Because fullfillRandomWords will be called by the chailink VRF node, we can't mint the NFT directly inside of it, because if we did the VRF node will be the owner of the NFT.
+    // To solve this issue, we will create a mapping of requestId to address, and then inside of fullfillRandomWords we will mint the NFT to the address that is mapped to the requestId
+    mapping(uint256 => address) private s_requestIdToSender;
+
     constructor(
         address vrfCoordinatorV2,
         uint64 subscriptionId,
