@@ -29,3 +29,5 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
     '========================= Finish Deploying Basic NFT ============================='
   )
 }
+
+module.exports.tags = ['all', 'basicnft']
