@@ -7,6 +7,11 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
   const { deployer } = await getNamedAccounts()
   const chainId = network.config.chainId
 
+  // get the IPFS hashes of our images, we can do it in 3 ways:
+  //    1. we can upload them to IPFS and get the hash. (https://docs.ipfs.io)
+  //    2. we can use a service like Pinata (https://pinata.cloud)
+  //    3. NFT.storage (https://nft.storage)
+
   let vrfCoordinatorV2Address, subscriptionId
 
   // if we are in localhost network or hardhat network
