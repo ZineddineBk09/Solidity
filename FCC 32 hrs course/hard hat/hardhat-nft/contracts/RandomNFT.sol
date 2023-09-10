@@ -9,7 +9,7 @@ import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/KeeperCompatibleInterface.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
-abstract contract RandomNFT is VRFConsumerBaseV2,ERC721  {
+abstract contract RandomNFT is VRFConsumerBaseV2, ERC721 {
     // when we mint an NFT, we will trigger chainlink VRF to get us a random number
     // using that number we will get a random NFT of #: Shiba Inu, Pug, St. Bernard
     // Pug: super rare, Shiba: sort of rare, and St. Bernard: common
@@ -62,6 +62,6 @@ abstract contract RandomNFT is VRFConsumerBaseV2,ERC721  {
         address owner = s_requestIdToSender[requestId];
         uint256 newTokenId = s_tokenCounter;
 
-        _safeMint
+        _safeMint(owner, newTokenId);
     }
 }
