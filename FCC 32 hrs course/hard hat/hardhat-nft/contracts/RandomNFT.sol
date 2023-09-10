@@ -38,7 +38,7 @@ abstract contract RandomNFT is VRFConsumerBaseV2, ERC721 {
     // NFT Variables
     uint256 public s_tokenCounter;
     uint256 public s_tokenPrice;
-    UINT256 internal constant MAX_CHANCE = 100;
+    uint256 internal constant MAX_CHANCE = 100;
 
     constructor(
         address vrfCoordinatorV2,
