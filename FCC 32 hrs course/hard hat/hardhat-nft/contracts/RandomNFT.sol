@@ -64,4 +64,6 @@ abstract contract RandomNFT is VRFConsumerBaseV2, ERC721 {
 
         _safeMint(owner, newTokenId);
     }
+
+    function tokenURI(uint256) public view override returns (string memory) {}
 }
