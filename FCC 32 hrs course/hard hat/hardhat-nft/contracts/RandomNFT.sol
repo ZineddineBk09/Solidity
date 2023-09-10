@@ -9,6 +9,13 @@ import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/KeeperCompatibleInterface.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
+// Enums
+enum Breed {
+    PUG,
+    SHIBA_INU,
+    ST_BERNARD
+}
+
 abstract contract RandomNFT is VRFConsumerBaseV2, ERC721 {
     // when we mint an NFT, we will trigger chainlink VRF to get us a random number
     // using that number we will get a random NFT of #: Shiba Inu, Pug, St. Bernard
@@ -66,13 +73,17 @@ abstract contract RandomNFT is VRFConsumerBaseV2, ERC721 {
 
         // Mint the NFT
         _safeMint(owner, newTokenId);
+
+        uint256 chance = randomWords[0] % MAX_CHANCE; // 0-99
     }
 
     // getChanceArray will return an array of 3 numbers, each number represents the chance of getting a specific NFT
     function getChanceArray() public pure returns (uint256[3] memory) {
         // Pug: 10% chance, Shiba: 20% chance, St. Bernard: 70% chance
-        return [10, 20, 70];
+        return [10, 30, 100];
     }
+
+    function getBreed(uint256 chance) public pure returns (Breed) {}
 
     function tokenURI(uint256) public view override returns (string memory) {}
 }
