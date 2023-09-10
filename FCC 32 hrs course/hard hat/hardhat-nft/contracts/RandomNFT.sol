@@ -8,7 +8,7 @@ import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/KeeperCompatibleInterface.sol";
 
-contract RandomNFT {
+abstract contract RandomNFT is VRFConsumerBaseV2 {
     // when we mint an NFT, we will trigger chainlink VRF to get us a random number
     // using that number we will get a random NFT of #: Shiba Inu, Pug, St. Bernard
     // Pug: super rare, Shiba: sort of rare, and St. Bernard: common
@@ -51,8 +51,10 @@ contract RandomNFT {
         s_requestIdToSender[requestId] = msg.sender;
     }
 
-    function fullfillRandomWords(
+    function fulfillRandomWords(
         uint256 requestId,
         uint256[] memory randomWords
-    ) internal override {}
+    ) internal override {
+        address owner = s_requestIdToSender[requestId];
+    }
 }
