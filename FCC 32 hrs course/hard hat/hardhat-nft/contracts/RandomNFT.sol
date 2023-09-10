@@ -102,6 +102,8 @@ abstract contract RandomNFT is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
         // Mint the NFT
         _safeMint(owner, newTokenId);
         _setTokenURI(newTokenId, s_pupTokenUris[uint256(breed)]); // uint256(breed)= 0, 1, 2
+
+        emit NFTMinted(breed, owner);
     }
 
     function withdraw() public onlyOwner {
