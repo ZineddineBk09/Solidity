@@ -9,7 +9,7 @@ import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/KeeperCompatibleInterface.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
-// Enums
+// ----------------- Enums -----------------
 enum Breed {
     PUG,
     SHIBA_INU,
@@ -23,6 +23,8 @@ abstract contract RandomNFT is VRFConsumerBaseV2, ERC721URIStorage {
 
     // users have to pay to mint an NFT
     // the owner of the contract can withdraw the ETH
+
+    // ----------------- State Variables -----------------
     VRFCoordinatorV2Interface private immutable i_vrfCoordinatorV2;
     uint64 private immutable i_subscriptionId;
     bytes32 private immutable i_gasLane;
@@ -30,16 +32,17 @@ abstract contract RandomNFT is VRFConsumerBaseV2, ERC721URIStorage {
     uint16 private constant REQUEST_CONFIRMATIONS = 3; // 3 is the minimum
     uint32 private constant NUM_WORDS = 1; // number of random values returned
 
-    // VRF Helpers
+    // ----------------- VRF Helpers -----------------
     // Because fullfillRandomWords will be called by the chailink VRF node, we can't mint the NFT directly inside of it, because if we did the VRF node will be the owner of the NFT.
     // To solve this issue, we will create a mapping of requestId to address, and then inside of fullfillRandomWords we will mint the NFT to the address that is mapped to the requestId
     mapping(uint256 => address) private s_requestIdToSender;
 
-    // NFT Variables
+    // ----------------- NFT Variables -----------------
     uint256 public s_tokenCounter;
     uint256 internal constant MAX_CHANCE = 100;
     string[] internal s_pupTokenUris;
 
+    // ----------------- Constructor -----------------
     constructor(
         address vrfCoordinatorV2,
         uint64 subscriptionId,
@@ -55,6 +58,8 @@ abstract contract RandomNFT is VRFConsumerBaseV2, ERC721URIStorage {
         s_pupTokenUris = pupTokenUris;
     }
 
+
+    // ----------------- Functions -----------------
     function requestNFT() public returns (uint256 requestId) {
         requestId = i_vrfCoordinatorV2.requestRandomWords(
             i_gasLane,
