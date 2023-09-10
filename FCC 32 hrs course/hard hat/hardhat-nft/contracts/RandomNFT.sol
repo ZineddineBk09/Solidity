@@ -66,6 +66,10 @@ abstract contract RandomNFT is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
         i_mintFee = mintFee;
     }
 
+    // ----------------- Events -----------------
+    event NFTRequested(uint256 indexed requestId, address requester);
+    event NFTMinted(Breed pupBreed, address owner);
+
     // ----------------- Functions -----------------
     function requestNFT() public payable returns (uint256 requestId) {
         if (msg.value < i_mintFee) {
@@ -80,6 +84,8 @@ abstract contract RandomNFT is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
         );
 
         s_requestIdToSender[requestId] = msg.sender;
+
+        emit NFTRequested(requestId, msg.sender);
     }
 
     function fulfillRandomWords(
