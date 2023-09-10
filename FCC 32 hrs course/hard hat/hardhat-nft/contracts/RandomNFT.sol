@@ -38,18 +38,21 @@ abstract contract RandomNFT is VRFConsumerBaseV2, ERC721URIStorage {
     // NFT Variables
     uint256 public s_tokenCounter;
     uint256 internal constant MAX_CHANCE = 100;
-
+    string[] internal s_pupTokenUris;
 
     constructor(
         address vrfCoordinatorV2,
         uint64 subscriptionId,
         bytes32 gasLane,
-        uint32 callbackGasLimit
+        uint32 callbackGasLimit,
+        string[3] memory pupTokenUris
     ) VRFConsumerBaseV2(vrfCoordinatorV2) ERC721("MeanPuppies", "MEANPUP") {
         i_vrfCoordinatorV2 = VRFCoordinatorV2Interface(vrfCoordinatorV2);
         i_subscriptionId = subscriptionId;
         i_gasLane = gasLane;
         i_callbackGasLimit = callbackGasLimit;
+        s_tokenCounter = 0;
+        s_pupTokenUris = pupTokenUris;
     }
 
     function requestNFT() public returns (uint256 requestId) {
