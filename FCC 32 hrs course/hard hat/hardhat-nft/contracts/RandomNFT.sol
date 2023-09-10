@@ -8,9 +8,11 @@ import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/KeeperCompatibleInterface.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 // ----------------- Errors -----------------
 error NeedMoreETHSent();
+error WithdrawFailed();
 
 // ----------------- Enums -----------------
 enum Breed {
@@ -19,7 +21,7 @@ enum Breed {
     ST_BERNARD
 }
 
-abstract contract RandomNFT is VRFConsumerBaseV2, ERC721URIStorage {
+abstract contract RandomNFT is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
     // when we mint an NFT, we will trigger chainlink VRF to get us a random number
     // using that number we will get a random NFT of #: Shiba Inu, Pug, St. Bernard
     // Pug: super rare, Shiba: sort of rare, and St. Bernard: common
@@ -94,6 +96,15 @@ abstract contract RandomNFT is VRFConsumerBaseV2, ERC721URIStorage {
         // Mint the NFT
         _safeMint(owner, newTokenId);
         _setTokenURI(newTokenId, s_pupTokenUris[uint256(breed)]); // uint256(breed)= 0, 1, 2
+    }
+
+    function withdraw() public onlyOwner {
+        uint256 amount = address(this).balance;
+        (bool success, ) = payable(msg.sender).call{value: amount}("");
+
+        if (!success) {
+            revert WithdrawFailed();
+        }
     }
 
     function getBreed(uint256 chance) public pure returns (Breed) {
