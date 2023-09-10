@@ -30,6 +30,8 @@ abstract contract RandomNFT is VRFConsumerBaseV2, ERC721 {
 
     // NFT Variables
     uint256 public s_tokenCounter;
+    uint256 public s_tokenPrice;
+    UINT256 internal constant MAX_CHANCE = 100;
 
     constructor(
         address vrfCoordinatorV2,
@@ -62,7 +64,14 @@ abstract contract RandomNFT is VRFConsumerBaseV2, ERC721 {
         address owner = s_requestIdToSender[requestId];
         uint256 newTokenId = s_tokenCounter;
 
+        // Mint the NFT
         _safeMint(owner, newTokenId);
+    }
+
+    // getChanceArray will return an array of 3 numbers, each number represents the chance of getting a specific NFT
+    function getChanceArray() public pure returns (uint256[3] memory) {
+        // Pug: 10% chance, Shiba: 20% chance, St. Bernard: 70% chance
+        return [10, 20, 70];
     }
 
     function tokenURI(uint256) public view override returns (string memory) {}
