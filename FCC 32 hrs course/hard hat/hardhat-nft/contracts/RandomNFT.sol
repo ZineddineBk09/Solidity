@@ -36,7 +36,7 @@ abstract contract RandomNFT is VRFConsumerBaseV2, ERC721 {
         uint64 subscriptionId,
         bytes32 gasLane,
         uint32 callbackGasLimit
-    ) VRFConsumerBaseV2(vrfCoordinatorV2) {
+    ) VRFConsumerBaseV2(vrfCoordinatorV2) ERC721("MeanPuppies", "MEANPUP") {
         i_vrfCoordinatorV2 = VRFCoordinatorV2Interface(vrfCoordinatorV2);
         i_subscriptionId = subscriptionId;
         i_gasLane = gasLane;
