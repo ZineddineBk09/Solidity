@@ -9,6 +9,9 @@ import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/KeeperCompatibleInterface.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
+// ----------------- Errors -----------------
+error NeedMoreETHSent();
+
 // ----------------- Enums -----------------
 enum Breed {
     PUG,
@@ -41,6 +44,7 @@ abstract contract RandomNFT is VRFConsumerBaseV2, ERC721URIStorage {
     uint256 public s_tokenCounter;
     uint256 internal constant MAX_CHANCE = 100;
     string[] internal s_pupTokenUris;
+    uint256 internal i_mintFee;
 
     // ----------------- Constructor -----------------
     constructor(
@@ -48,7 +52,8 @@ abstract contract RandomNFT is VRFConsumerBaseV2, ERC721URIStorage {
         uint64 subscriptionId,
         bytes32 gasLane,
         uint32 callbackGasLimit,
-        string[3] memory pupTokenUris
+        string[3] memory pupTokenUris,
+        uint256 mintFee
     ) VRFConsumerBaseV2(vrfCoordinatorV2) ERC721("MeanPuppies", "MEANPUP") {
         i_vrfCoordinatorV2 = VRFCoordinatorV2Interface(vrfCoordinatorV2);
         i_subscriptionId = subscriptionId;
@@ -56,11 +61,14 @@ abstract contract RandomNFT is VRFConsumerBaseV2, ERC721URIStorage {
         i_callbackGasLimit = callbackGasLimit;
         s_tokenCounter = 0;
         s_pupTokenUris = pupTokenUris;
+        i_mintFee = mintFee;
     }
 
-
     // ----------------- Functions -----------------
-    function requestNFT() public returns (uint256 requestId) {
+    function requestNFT() public payable returns (uint256 requestId) {
+        if (msg.value < i_mintFee) {
+            revert NeedMoreETHSent();
+        }
         requestId = i_vrfCoordinatorV2.requestRandomWords(
             i_gasLane,
             i_subscriptionId,
