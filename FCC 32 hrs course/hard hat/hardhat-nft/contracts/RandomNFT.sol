@@ -11,8 +11,8 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 // ----------------- Errors -----------------
-error NeedMoreETHSent();
-error WithdrawFailed();
+error RandomNFT__NeedMoreETHSent();
+error RandomNFT__WithdrawFailed();
 
 // ----------------- Enums -----------------
 enum Breed {
@@ -69,7 +69,7 @@ abstract contract RandomNFT is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
     // ----------------- Functions -----------------
     function requestNFT() public payable returns (uint256 requestId) {
         if (msg.value < i_mintFee) {
-            revert NeedMoreETHSent();
+            revert RandomNFT__NeedMoreETHSent();
         }
         requestId = i_vrfCoordinatorV2.requestRandomWords(
             i_gasLane,
@@ -103,7 +103,7 @@ abstract contract RandomNFT is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
         (bool success, ) = payable(msg.sender).call{value: amount}("");
 
         if (!success) {
-            revert WithdrawFailed();
+            revert RandomNFT__WithdrawFailed();
         }
     }
 
