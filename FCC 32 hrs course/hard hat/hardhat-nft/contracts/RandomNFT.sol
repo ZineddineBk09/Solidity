@@ -7,8 +7,9 @@ pragma solidity ^0.8.7;
 import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/KeeperCompatibleInterface.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
-abstract contract RandomNFT is VRFConsumerBaseV2 {
+abstract contract RandomNFT is VRFConsumerBaseV2,ERC721  {
     // when we mint an NFT, we will trigger chainlink VRF to get us a random number
     // using that number we will get a random NFT of #: Shiba Inu, Pug, St. Bernard
     // Pug: super rare, Shiba: sort of rare, and St. Bernard: common
@@ -26,6 +27,9 @@ abstract contract RandomNFT is VRFConsumerBaseV2 {
     // Because fullfillRandomWords will be called by the chailink VRF node, we can't mint the NFT directly inside of it, because if we did the VRF node will be the owner of the NFT.
     // To solve this issue, we will create a mapping of requestId to address, and then inside of fullfillRandomWords we will mint the NFT to the address that is mapped to the requestId
     mapping(uint256 => address) private s_requestIdToSender;
+
+    // NFT Variables
+    uint256 public s_tokenCounter;
 
     constructor(
         address vrfCoordinatorV2,
@@ -56,5 +60,8 @@ abstract contract RandomNFT is VRFConsumerBaseV2 {
         uint256[] memory randomWords
     ) internal override {
         address owner = s_requestIdToSender[requestId];
+        uint256 newTokenId = s_tokenCounter;
+
+        _safeMint
     }
 }
