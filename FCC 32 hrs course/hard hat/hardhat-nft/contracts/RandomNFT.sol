@@ -15,10 +15,10 @@ contract RandomNFT {
     // users have to pay to mint an NFT
     // the owner of the contract can withdraw the ETH
 
-    function RequestNFT() {}
+    function requestNFT() public {}
 
     function fullfillRandomWords(
         uint256 requestId,
         uint256[] memory randomWords
-    ) {}
+    ) internal override {}
 }
