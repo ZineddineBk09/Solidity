@@ -7,7 +7,7 @@ pragma solidity ^0.8.7;
 import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/KeeperCompatibleInterface.sol";
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
 // Enums
 enum Breed {
@@ -16,7 +16,7 @@ enum Breed {
     ST_BERNARD
 }
 
-abstract contract RandomNFT is VRFConsumerBaseV2, ERC721 {
+abstract contract RandomNFT is VRFConsumerBaseV2, ERC721URIStorage {
     // when we mint an NFT, we will trigger chainlink VRF to get us a random number
     // using that number we will get a random NFT of #: Shiba Inu, Pug, St. Bernard
     // Pug: super rare, Shiba: sort of rare, and St. Bernard: common
@@ -71,10 +71,12 @@ abstract contract RandomNFT is VRFConsumerBaseV2, ERC721 {
         address owner = s_requestIdToSender[requestId];
         uint256 newTokenId = s_tokenCounter;
 
+        // get a random number between 0-99
+        uint256 chance = randomWords[0] % MAX_CHANCE; // 0-99
+        Breed breed = getBreed(chance);
+
         // Mint the NFT
         _safeMint(owner, newTokenId);
-
-        uint256 chance = randomWords[0] % MAX_CHANCE; // 0-99
     }
 
     function getBreed(uint256 chance) public pure returns (Breed) {
