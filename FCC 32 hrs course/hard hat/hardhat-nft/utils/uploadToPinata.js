@@ -36,7 +36,6 @@ async function storeImages(imagesFilePath) {
   try {
     const responses = await Promise.all(uploadPromises)
     console.log('Files Uploaded Successfully ✅✅')
-    console.log({ responses, files })
     return { responses, files }
   } catch (error) {
     console.error('Error uploading files:', error)
@@ -44,6 +43,17 @@ async function storeImages(imagesFilePath) {
   }
 }
 
+async function storeTokenUriMetadata(metadata) {
+  try {
+    const response = await pinata.pinJSONToIPFS(metadata)
+    console.log('Metadata Uploaded Successfully ✅✅')
+    return response
+  } catch (err) {
+    console.error('Error uploading metadata:', err)
+  }
+}
+
 module.exports = {
   storeImages,
+  storeTokenUriMetadata,
 }
