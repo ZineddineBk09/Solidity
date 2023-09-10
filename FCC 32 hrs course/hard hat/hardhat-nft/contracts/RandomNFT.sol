@@ -107,8 +107,21 @@ abstract contract RandomNFT is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
         }
     }
 
+    // ----------------- Getters -----------------
     function getBreed(uint256 chance) public pure returns (Breed) {
         uint256 i = chance < 10 ? 0 : chance < 30 ? 1 : 2;
         return Breed(i);
+    }
+
+    function getMintFee() public view returns (uint256) {
+        return i_mintFee;
+    }
+
+    function getPupTokenUri(uint256 index) public view returns (string memory) {
+        return s_pupTokenUris[index];
+    }
+
+    function getTokenCounter() public view returns (uint256) {
+        return s_tokenCounter;
     }
 }
