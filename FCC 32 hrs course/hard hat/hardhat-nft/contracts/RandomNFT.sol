@@ -77,13 +77,10 @@ abstract contract RandomNFT is VRFConsumerBaseV2, ERC721 {
         uint256 chance = randomWords[0] % MAX_CHANCE; // 0-99
     }
 
-    // getChanceArray will return an array of 3 numbers, each number represents the chance of getting a specific NFT
-    function getChanceArray() public pure returns (uint256[3] memory) {
-        // Pug: 10% chance, Shiba: 20% chance, St. Bernard: 70% chance
-        return [10, 30, 100];
+    function getBreed(uint256 chance) public pure returns (Breed) {
+        uint256 i = chance < 10 ? 0 : chance < 30 ? 1 : 2;
+        return Breed(i);
     }
-
-    function getBreed(uint256 chance) public pure returns (Breed) {}
 
     function tokenURI(uint256) public view override returns (string memory) {}
 }
