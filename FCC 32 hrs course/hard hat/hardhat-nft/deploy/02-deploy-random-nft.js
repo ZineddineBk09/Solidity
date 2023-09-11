@@ -19,11 +19,18 @@ const metadataTemplate = {
   ],
 }
 
+let tokenUris = [
+  'ipfs://QmSpxVwNjU9hxqFH3jGWYn7mKuMADFTuNEXSeoCunDke75',
+  'ipfs://Qmb4k7s3SpXkRVKDPgqfqfhcH86GgYmB6czp6PxgmVFmcV',
+  'ipfs://Qme6jgeziY61n9hrx3C1E7Cy91GpQoWXhVysUx95pxcPBz',
+]
+
+const FUND_AMOUNT = '10000000000000000000' // 10 LINK
+
 module.exports = async function ({ getNamedAccounts, deployments }) {
   const { deploy, log } = deployments
   const { deployer } = await getNamedAccounts()
   const chainId = network.config.chainId
-  let tokenUris
 
   // get the IPFS hashes of our images, we can do it in 3 ways:
   if (process.env.UPLOAD_TO_PINATA == 'true') {
@@ -46,6 +53,9 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
     const tx = await vrfCoordinatorV2Mock.createSubscription()
     const txReceipt = await tx.wait(1)
     subscriptionId = txReceipt.events[0].args.subId
+
+    // fund the contract with LINK
+    await vrfCoordinatorV2Mock.fundSubscription(subscriptionId, FUND_AMOUNT)
   } else {
     // if we are in a public network (sepolia)
     vrfCoordinatorV2Address = networkConfig[chainId].vrfCoordinatorV2
@@ -64,6 +74,24 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
     // pupTokenUris,
     networkConfig[chainId].mintFee,
   ]
+
+  const randomIpfsNft = deploy('RandomNFT', {
+    from: deployer,
+    args: args,
+    log: true,
+    waitConfirmations: network.config.blockConfirmations || 1,
+  })
+
+  if (
+    !developmentChains.includes(network.name) &&
+    process.env.ETHERSCAN_API_KEY
+  ) {
+    log('Verifying...⌛⌛')
+    await verify(randomIpfsNft.address, args)
+  }
+  log(
+    '========================= Finish Deploying Random NFT ============================='
+  )
 }
 
 async function handleTokenUris() {
