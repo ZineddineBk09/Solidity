@@ -9,6 +9,7 @@ import "base64-sol/base64.sol";
 error DynamicSvgNFT__QueryForNonexistentToken();
 
 contract DynamicSvgNFT is ERC721 {
+    // State variables
     uint256 private s_tokenCounter;
     string private s_lowImageURI;
     string private s_highImageURI;
@@ -17,6 +18,10 @@ contract DynamicSvgNFT is ERC721 {
     AggregatorV3Interface internal immutable priceFeed;
     mapping(uint256 => int256) private s_tokenIdToPrice;
 
+    // Events
+    event CreatedNFT(uint256 indexed tokenId, int256 price);
+
+    // Constructor
     constructor(
         address priceFeedAddress,
         string memory lowSvg,
@@ -43,6 +48,7 @@ contract DynamicSvgNFT is ERC721 {
         s_tokenIdToPrice[s_tokenCounter] = highValue;
         _safeMint(msg.sender, s_tokenCounter);
         s_tokenCounter++;
+        emit CreatedNFT(s_tokenCounter, highValue);
     }
 
     function _baseURI() internal pure virtual override returns (string memory) {
