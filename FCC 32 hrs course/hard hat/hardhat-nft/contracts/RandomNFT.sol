@@ -99,6 +99,8 @@ abstract contract RandomNFT is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
         uint256 chance = randomWords[0] % MAX_CHANCE; // 0-99
         Breed breed = getBreed(chance);
 
+        s_tokenCounter += 1;
+
         // Mint the NFT
         _safeMint(owner, newTokenId);
         _setTokenURI(newTokenId, s_pupTokenUris[uint256(breed)]); // uint256(breed)= 0, 1, 2
