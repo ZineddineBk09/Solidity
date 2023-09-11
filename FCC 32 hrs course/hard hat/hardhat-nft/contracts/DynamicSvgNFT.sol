@@ -11,7 +11,7 @@ contract DynamicSvgNFT is ERC721 {
     string private constant base64EncodedSvgPrefix =
         "data:image/svg+xml;base64,";
 
-    constructor(string[] memory imagesUris) ERC721("Monuments", "MNM") {
+    constructor(string[] memory imagesUris) ERC721("Moods", "MNM") {
         s_tokenCounter = 0;
     }
 
@@ -50,7 +50,7 @@ contract DynamicSvgNFT is ERC721 {
                             abi.encodePacked(
                                 '{"name":',
                                 name(),
-                                '", "description": "Monument NFTs", "image": "',
+                                '", "description": "Mood NFTs", "image": "',
                                 imageURI,
                                 '", "attributes": [{"trait_type": "coolness", "value": "100"}]}'
                                 '"}'
