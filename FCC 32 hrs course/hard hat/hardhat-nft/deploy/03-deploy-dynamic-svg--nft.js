@@ -1,4 +1,5 @@
 const { network, ethers } = require('hardhat')
+const fs = require('fs')
 const { developmentChains, networkConfig } = require('../helper-hardhat-config')
 const { verify } = require('../utils/verify')
 const {
@@ -19,12 +20,6 @@ const metadataTemplate = {
   ],
 }
 
-let tokenUris = [
-  'ipfs://QmSpxVwNjU9hxqFH3jGWYn7mKuMADFTuNEXSeoCunDke75',
-  'ipfs://Qmb4k7s3SpXkRVKDPgqfqfhcH86GgYmB6czp6PxgmVFmcV',
-  'ipfs://Qme6jgeziY61n9hrx3C1E7Cy91GpQoWXhVysUx95pxcPBz',
-]
-
 const FUND_AMOUNT = '10000000000000000000' // 10 LINK
 
 module.exports = async function ({ getNamedAccounts, deployments }) {
@@ -39,6 +34,21 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
   } else {
     ethUsdPriceFeedAddress = networkConfig[chainId]['ethUsdPriceFeed']
   }
+
+  const lowSVG = await fs.readFileSync('./images/dynmicNFT/frown.svg', {
+    encoding: 'utf8',
+  })
+  const highSVG = await fs.readFileSync('./images/dynamicNFT/happy.svg', {
+    encoding: 'utf8',
+  })
+
+  args = [ethUsdPriceFeedAddress, lowSVG, highSVG]
+
+  const dynamigSvgNFT = await deploy('DynamicSvgNFT', {
+    from: deployer,
+    log: true,
+    args: args,
+  })
 
   log(
     '========================= Finish Deploying Dynamic SVG NFT ============================='
