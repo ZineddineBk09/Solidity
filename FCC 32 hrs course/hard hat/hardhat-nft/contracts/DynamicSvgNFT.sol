@@ -19,6 +19,8 @@ contract DynamicSvgNFT is ERC721 {
         string memory highSvg
     ) ERC721("Moods", "MNM") {
         s_tokenCounter = 0;
+        s_lowImageURI = svgToImageURI(lowSvg);
+        s_highImageURI = svgToImageURI(highSvg);
     }
 
     function svgToImageURI(
