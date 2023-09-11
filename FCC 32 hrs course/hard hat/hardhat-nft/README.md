@@ -49,14 +49,12 @@ Getting Started
 
 1.  Clone the repository:
 
-    bashCopy code
 
     `git clone https://github.com/your-username/random-nft-project.git
     cd random-nft-project`
 
 2.  Install project dependencies:
 
-    bashCopy code
 
     `npm install`
 
@@ -77,13 +75,11 @@ Getting Started
 
 -   To deploy the project on a local network for testing, use the following command:
 
-    bashCopy code
 
     `npx hardhat deploy --network localhost`
 
 -   To deploy the project on a public Ethereum network, modify the network configuration in the deployment scripts and use:
 
-    bashCopy code
 
     `npx hardhat deploy --network mainnet`
 
@@ -93,7 +89,6 @@ Getting Started
 
 -   To verify the deployed contracts on Etherscan, you can use the following command:
 
-    bashCopy code
 
     `npx hardhat verify --network mainnet <contract-address>`
 
@@ -103,7 +98,6 @@ Getting Started
 
 -   Run tests using:
 
-    bashCopy code
 
     `npx hardhat test`
 
