@@ -5,6 +5,8 @@ pragma solidity ^0.8.7;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "base64-sol/base64.sol";
 
+error DynamicSvgNFT__QueryForNonexistentToken();
+
 contract DynamicSvgNFT is ERC721 {
     uint256 private s_tokenCounter;
     string[] private i_imagesUris;
@@ -38,7 +40,10 @@ contract DynamicSvgNFT is ERC721 {
     function tokenURI(
         uint256 tokenId
     ) public view override returns (string memory) {
-        require(_exists(tokenId), "URI Query for nonexistent token");
+        if (!_exists(tokenId)) {
+            revert DynamicSvgNFT__QueryForNonexistentToken();
+        }
+        
         string memory imageURI = "";
 
         return
