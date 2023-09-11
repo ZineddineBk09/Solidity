@@ -9,11 +9,15 @@ error DynamicSvgNFT__QueryForNonexistentToken();
 
 contract DynamicSvgNFT is ERC721 {
     uint256 private s_tokenCounter;
-    string[] private i_imagesUris;
+    string private s_lowImageURI;
+    string private s_highImageURI;
     string private constant base64EncodedSvgPrefix =
         "data:image/svg+xml;base64,";
 
-    constructor(string[] memory imagesUris) ERC721("Moods", "MNM") {
+    constructor(
+        string memory lowSvg,
+        string memory highSvg
+    ) ERC721("Moods", "MNM") {
         s_tokenCounter = 0;
     }
 
@@ -43,7 +47,7 @@ contract DynamicSvgNFT is ERC721 {
         if (!_exists(tokenId)) {
             revert DynamicSvgNFT__QueryForNonexistentToken();
         }
-        
+
         string memory imageURI = "";
 
         return
