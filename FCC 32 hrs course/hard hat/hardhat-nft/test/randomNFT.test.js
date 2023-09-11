@@ -36,15 +36,16 @@ const { developmentChains } = require('../helper-hardhat-config')
           const fee = await randomNft.getMintFee()
           await expect(
             randomNft.requestNft({
-              value: fee.sub(ethers.utils.parseEther('0.001')),
+              value: fee.sub(ethers.utils.parseEther('0.001').toString()),
             })
           ).to.be.revertedWith('RandomNFT__NeedMoreETHSent')
         })
         it('emits an event and kicks off a random word request', async function () {
           const fee = await randomNft.getMintFee()
-          await expect(
-            randomNft.requestNft({ value: fee.toString() })
-          ).to.emit(randomNft, 'NftRequested')
+          await expect(randomNft.requestNft({ value: fee.toString() })).to.emit(
+            randomNft,
+            'NftRequested'
+          )
         })
       })
       describe('fulfillRandomWords', () => {
@@ -93,9 +94,9 @@ const { developmentChains } = require('../helper-hardhat-config')
           assert.equal(2, expectedValue)
         })
         it('should revert if moddedRng > 99', async function () {
-          await expect(
-            randomNft.getBreedFromModdedRng(100)
-          ).to.be.revertedWith('RandomNFT__RangeOutOfBounds')
+          await expect(randomNft.getBreedFromModdedRng(100)).to.be.revertedWith(
+            'RandomNFT__RangeOutOfBounds'
+          )
         })
       })
     })

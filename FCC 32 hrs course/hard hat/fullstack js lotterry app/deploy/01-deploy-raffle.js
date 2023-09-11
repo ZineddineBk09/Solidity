@@ -2,7 +2,7 @@ const { network, ethers } = require('hardhat')
 import { developmentChains, networkConfig } from '../helper-hardhat-config'
 const { verify } = require('../utils/verify')
 
-const VRF_SUB_FUND_AMOUNT = ethers.utils.parseEther('30')
+const VRF_SUB_FUND_AMOUNT = ethers.utils.parseEther('30').toString()
 
 module.exports = async function ({ getNamedAccounts, deployments }) {
   const { deploy, log } = deployments
