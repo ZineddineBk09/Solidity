@@ -47,4 +47,7 @@ module.exports = async function ({ getNamedAccounts }) {
   const highValue = ethers.utils.parseEther('2000').toString()
   const dynamigSvgNFT = await ethers.getContract('DynamicSvgNFT', deployer)
   const dynamigSvgNFTMintTx = await dynamigSvgNFT.mintNFT(highValue)
+  await dynamigSvgNFTMintTx.wait(1)
+
+  console.log('Dynamic SVG NFT minted: ', await dynamigSvgNFT.tokenURI(0))
 }
